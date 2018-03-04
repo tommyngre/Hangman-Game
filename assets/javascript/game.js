@@ -40,10 +40,10 @@ function isLetter(key) {
   } else { return false; }
 }
 
-function isUnique(key){
-  for (i=0; i<keysPressedAry.length; i++){
-    if (key == keysPressedAry[i]){
-      console.log(hi);
+function isUnique(key) {
+  for (i = 0; i < keysPressedAry.length; i++) {
+    if (key == keysPressedAry[i]) {
+      //console.log(key + " key pressed already");
       return false;
     }
   }
@@ -51,15 +51,30 @@ function isUnique(key){
 }
 
 var keysPressed = document.getElementById("keys-pressed");
+var eKey = "";
+
+function updateMoves() {
+  if (parseInt(movesLeft.textContent) > 1) {
+    movesLeft.textContent = movesLeft.textContent - 1;
+  } else{
+    //handle game over scenario
+    movesLeft.textContent = 0;
+    console.log("game over");
+  }
+}
 
 document.onkeyup = function (e) {
   lastKeyPress.textContent = e.key;
-  if (isLetter(e.key)){
-    if (isUnique(e.key)){
+  eKey = e.key.toLowerCase();
+  //console.log("eKey: " + eKey);
+  if (isLetter(eKey)) {
+    if (isUnique(eKey)) {
       keysPressed.textContent = "";
-      keysPressedAry.push(e.key);
+      keysPressedAry.push(eKey);
       keysPressed.innerText = keysPressedToString(keysPressedAry);
       //console.log(keysPressedAry);  
+      updateMoves();
+      //update graphic
     }
   }
 };
@@ -73,6 +88,8 @@ function htmlStr(charCount) {
   return str;
 };
 
+var movesLeft = document.getElementById("moves-left");
+movesLeft.textContent = 10;
 
 // console.log(placeholders);
 var charPlaceholders = document.getElementById("char-placeholders");
@@ -80,4 +97,3 @@ charPlaceholders.innerHTML = htmlStr(charCount);
 
 var numLetters = document.getElementById("num-letters");
 numLetters.textContent = charCount;
-
