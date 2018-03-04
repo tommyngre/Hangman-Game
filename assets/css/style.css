@@ -1,0 +1,22 @@
+body{
+  width: 100%;
+}
+
+.game{
+  background-color: blanchedalmond;
+  margin:0 auto;
+  padding-top:50px;
+}
+
+#char-placeholders{
+  margin:30px auto 30px auto;
+}
+
+.charDiv{
+  content:"";
+  float:left;
+  margin:10px;
+  padding: 50px 0px 0px 0px;
+  width:20px;
+  border-bottom:5px solid black;
+}
