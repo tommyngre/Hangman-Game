@@ -9,12 +9,12 @@ var charCount = word.length;
 // build array of chars in var word
 var charAry = new Array;
 charAry = buildCharAry(word);
-function buildCharAry(word){
-for (i=0 ; i<charCount; i++){
-  charAry.push(word.charAt(i));
-  //console.log(charAry);
-}
-return charAry;
+function buildCharAry(word) {
+  for (i = 0; i < charCount; i++) {
+    charAry.push(word.charAt(i));
+    //console.log(charAry);
+  }
+  return charAry;
 }
 
 //add keys pressed by user to array
@@ -22,31 +22,48 @@ var keysPressedAry = new Array;
 
 var lastKeyPress = document.getElementById("last-key-press");
 
-function keysPressedToString(keysPressedAry){
-  for (i=0; i<keysPressedAry.length; i++){
-  keysPressedString = keysPressedString + keysPressedAry[i];
+function keysPressedToString(keysPressedAry) {
+  for (i = 0; i < keysPressedAry.length; i++) {
+    keysPressedString = keysPressedString + keysPressedAry[i] + " ";
   }
-  console.log(keysPressedString);
+  //console.log(keysPressedString);
   return keysPressedString;
 }
 
 var keysPressedString = "";
 
+function isLetter(key) {
+  //if one char
+  if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
+    return true;
+  } else { return false; }
+}
 
-document.onkeyup = function(e){
-  lastKeyPress.textContent = e.key;  
-  //check if unique alpha; if so, add to array
-  keysPressedAry.push(e.key);
-  //console.log(keysPressedAry);
+function isUnique(key){
+  for (i=0; i<keysPressedAry.length; i++){
+    if (key == keysPressedAry[i]){
+      console.log(hi);
+      return false;
+    }
+  }
+  return true;
+}
 
-  //print keys pressed array to screen
-  keysPressed.textContent = keysPressedToString(keysPressedAry);
+document.onkeyup = function (e) {
+  lastKeyPress.textContent = e.key;
+  if (isLetter(e.key)){
+    if (isUnique(e.key)){
+      keysPressedAry.push(e.key);
+      keysPressed.textContent = keysPressedToString(keysPressedAry);    
+    }
+
+  }
 };
 
-function htmlStr(charCount){
-  var str = "<div class=\"\">";  
-  for (i=0; i<charCount; i++){
-    str = str + "<div id=\"charDiv" + i +"\" class=\"charDiv\"></div>";
+function htmlStr(charCount) {
+  var str = "<div class=\"\">";
+  for (i = 0; i < charCount; i++) {
+    str = str + "<div id=\"charDiv" + i + "\" class=\"charDiv\"></div>";
   }
   str = str + "</div>";
   return str;
