@@ -23,6 +23,7 @@ var keysPressedAry = new Array;
 var lastKeyPress = document.getElementById("last-key-press");
 
 function keysPressedToString(keysPressedAry) {
+  keysPressedString = "";
   for (i = 0; i < keysPressedAry.length; i++) {
     keysPressedString = keysPressedString + keysPressedAry[i] + " ";
   }
@@ -49,14 +50,17 @@ function isUnique(key){
   return true;
 }
 
+var keysPressed = document.getElementById("keys-pressed");
+
 document.onkeyup = function (e) {
   lastKeyPress.textContent = e.key;
   if (isLetter(e.key)){
     if (isUnique(e.key)){
+      keysPressed.textContent = "";
       keysPressedAry.push(e.key);
-      keysPressed.textContent = keysPressedToString(keysPressedAry);    
+      keysPressed.innerText = keysPressedToString(keysPressedAry);
+      //console.log(keysPressedAry);  
     }
-
   }
 };
 
@@ -69,7 +73,6 @@ function htmlStr(charCount) {
   return str;
 };
 
-var keysPressed = document.getElementById("keys-pressed");
 
 // console.log(placeholders);
 var charPlaceholders = document.getElementById("char-placeholders");
