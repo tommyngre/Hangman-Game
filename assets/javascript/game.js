@@ -1,4 +1,8 @@
-var words = ["Bimp", "Bramp", "Priest"];
+var words = [
+  "Bimp", "Bramp", "Priest", "Toger", 
+  "Nosewolf", "Lort", "Bruise", "Whitey",
+  "Card"
+];
 
 var word = words[Math.floor(Math.random() * Math.floor(words.length))];
 //console.log(word);
