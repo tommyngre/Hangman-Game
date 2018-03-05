@@ -71,14 +71,17 @@ function updateMoves() {
   }
 }
 
-function isInWord(key){
-  for (i=0; i<charAry.length; i++){
-    if ((key == charAry[i]) || (key.toUpperCase() == charAry[i])){
+function isInWord(key) {
+  var inWord = false;
+  for (i = 0; i < charAry.length; i++) {
+    if ((key == charAry[i]) || (key.toUpperCase() == charAry[i])) {
       //console.log(key + " appears in " + word)
-      var charInWord = document.getElementById("charDiv"+i);
+      var charInWord = document.getElementById("charDiv" + i);
       charInWord.textContent = key;
+      inWord = true;
     }
   }
+  return inWord;
 }
 
 document.onkeyup = function (e) {
@@ -89,11 +92,14 @@ document.onkeyup = function (e) {
     //check if keystroke is new
     if (isUnique(eKey)) {
       //check if key is in charAry
-      isInWord(eKey);
-      keysPressed.textContent = "";
-      keysPressedAry.push(eKey);
-      keysPressed.innerText = keysPressedToString(keysPressedAry);
-      updateMoves();
+      if (!(isInWord(eKey))){
+        keysPressed.textContent = "";
+        keysPressedAry.push(eKey);
+        keysPressed.innerText = keysPressedToString(keysPressedAry);
+        updateMoves();
+      } else {
+
+      }
     }
   }
 };
