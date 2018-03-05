@@ -6,6 +6,10 @@ body{
   display:none;
 }
 
+p.hidden{
+  display:none;
+}
+
 .game{
   background-color: blanchedalmond;
   margin:20px auto 0px auto;
