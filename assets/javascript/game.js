@@ -58,6 +58,35 @@ function isUnique(key) {
 var keysPressed = document.getElementById("keys-pressed");
 var eKey = "";
 
+function drawMove(movesLeft){
+  //console.log(movesLeft);
+  if (movesLeft == parseInt(9)){
+  var c = document.getElementById("canvas");
+  var context = c.getContext("2d");
+  context.moveTo(110,190);
+  context.lineTo(100,175);
+  context.stroke();
+} else if (movesLeft == parseInt(8)) {
+  var c = document.getElementById("canvas");
+  var context = c.getContext("2d");
+  context.moveTo(100,175);
+  context.lineTo(75,120);
+  context.stroke();    
+} else if (movesLeft == parseInt(7)) {
+  var c = document.getElementById("canvas");
+  var context = c.getContext("2d");
+  context.moveTo(75,120);
+  context.lineTo(50,175);
+  context.stroke();    
+} else if (movesLeft == parseInt(6)) {
+  var c = document.getElementById("canvas");
+  var context = c.getContext("2d");
+  context.moveTo(50,175);
+  context.lineTo(40,190);
+  context.stroke();    
+}
+}
+
 function updateMoves() {
   if (parseInt(movesLeft.textContent) > 1) {
     movesLeft.textContent = movesLeft.textContent - 1;
@@ -67,6 +96,7 @@ function updateMoves() {
       $("#moves-left").removeClass("moves-flash");
     }, 1000);
     //update graphic
+    drawMove(parseInt(movesLeft.textContent));
   } else {
     //handle game over scenario
     movesLeft.textContent = 0;
