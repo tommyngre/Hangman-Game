@@ -56,25 +56,44 @@ var eKey = "";
 function updateMoves() {
   if (parseInt(movesLeft.textContent) > 1) {
     movesLeft.textContent = movesLeft.textContent - 1;
-  } else{
+    $("#moves-left").addClass("moves-flash");
+    //remove animation class *after* animation runs
+    setTimeout(function () {
+      $("#moves-left").removeClass("moves-flash");
+    }, 1000);
+    //update graphic
+  } else {
     //handle game over scenario
     movesLeft.textContent = 0;
     console.log("game over");
+    $("#moves-left").addClass("final-moves-flash");
+    //update graphic
+  }
+}
+
+function isInWord(key){
+  for (i=0; i<charAry.length; i++){
+    if ((key == charAry[i]) || (key.toUpperCase() == charAry[i])){
+      //console.log(key + " appears in " + word)
+      var charInWord = document.getElementById("charDiv"+i);
+      charInWord.textContent = key;
+    }
   }
 }
 
 document.onkeyup = function (e) {
   lastKeyPress.textContent = e.key;
   eKey = e.key.toLowerCase();
-  //console.log("eKey: " + eKey);
+  //check if keystroke is a letter
   if (isLetter(eKey)) {
+    //check if keystroke is new
     if (isUnique(eKey)) {
+      //check if key is in charAry
+      isInWord(eKey);
       keysPressed.textContent = "";
       keysPressedAry.push(eKey);
       keysPressed.innerText = keysPressedToString(keysPressedAry);
-      //console.log(keysPressedAry);  
       updateMoves();
-      //update graphic
     }
   }
 };
@@ -91,7 +110,6 @@ function htmlStr(charCount) {
 var movesLeft = document.getElementById("moves-left");
 movesLeft.textContent = 10;
 
-// console.log(placeholders);
 var charPlaceholders = document.getElementById("char-placeholders");
 charPlaceholders.innerHTML = htmlStr(charCount);
 
