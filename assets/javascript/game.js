@@ -63,48 +63,56 @@ function drawMove(movesLeft){
   if (movesLeft == parseInt(9)){
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(90,190);
   context.lineTo(80,175);
   context.stroke();
 } else if (movesLeft == parseInt(8)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(80,175);
   context.lineTo(75,100);
   context.stroke();    
 } else if (movesLeft == parseInt(7)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(75,100);
   context.lineTo(70,175);
   context.stroke();    
 } else if (movesLeft == parseInt(6)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(70,175);
   context.lineTo(60,190);
   context.stroke();    
 } else if (movesLeft == parseInt(5)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(75,100);
   context.lineTo(75,50);
   context.stroke();    
 } else if (movesLeft == parseInt(4)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(75,60);
   context.lineTo(60,140);
   context.stroke();    
 } else if (movesLeft == parseInt(3)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(75,60);
   context.lineTo(90,140);
   context.stroke();    
 } else if (movesLeft == parseInt(2)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(60,140);
   context.lineTo(57,150);
   context.stroke();    
@@ -117,6 +125,7 @@ function drawMove(movesLeft){
 } else if (movesLeft == parseInt(1)) {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.moveTo(90,140);
   context.lineTo(87,150);
   context.stroke();    
@@ -129,6 +138,7 @@ function drawMove(movesLeft){
 } else {
   var c = document.getElementById("canvas");
   var context = c.getContext("2d");
+  context.lineWidth=4;
   context.beginPath();
   context.ellipse(90, 38, 20, 10, 155 * Math.PI/180, 0, 2 * Math.PI);
   context.stroke();

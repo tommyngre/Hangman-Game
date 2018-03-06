@@ -38,6 +38,17 @@ p.hidden{
   padding-left:15px;  
 }
 
+#keys-pressed{
+  font-family: 'Nanum Gothic Coding', monospace;
+  font-weight: 700;
+  font-size:1.2em;
+}
+
+#canvas{
+  margin-top:30px;
+  border:4px solid #000000;
+}
+
 @keyframes moves-flash {
   0% {
       color: Black;
