@@ -158,6 +158,18 @@ function drawMove(movesLeft){
   context.stroke();
   $("#canvas").css("border-color","red");
 }
+$("#canvas").addClass("moves-flash");
+//remove animation class *after* animation runs
+
+if (!(movesLeft == 0)){
+  setTimeout(function () {
+    $("#canvas").removeClass("moves-flash");
+  }, 1000);  
+} else {
+  $("#canvas").css("background-color","red");
+}
+
+
 }
 
 function updateMoves() {
