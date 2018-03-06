@@ -172,6 +172,10 @@ if (!(movesLeft == 0)){
 
 }
 
+function showModal() {
+  $("#myModal").css("display","block");
+}
+
 function updateMoves() {
   if (parseInt(movesLeft.textContent) > 1) {
     movesLeft.textContent = movesLeft.textContent - 1;
@@ -187,6 +191,7 @@ function updateMoves() {
     movesLeft.textContent = 0;
     $("#moves-left").addClass("final-moves-flash");
     drawMove(parseInt(0));
+    showModal();
   }
 }
 
@@ -232,6 +237,24 @@ function htmlStr(charCount) {
   return str;
 };
 
+/* Code for Modal */
+// Adapt to set modal to block when movesLeft = 0 
+
+// Adapt to have yes button that resets game
+// Or x button to just close Modal; leave hanging dude
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+      modal.style.display = "none";
+  }
+}
+
+
+
 var movesLeft = document.getElementById("moves-left");
 movesLeft.textContent = 10;
 
@@ -240,3 +263,5 @@ charPlaceholders.innerHTML = htmlStr(charCount);
 
 var numLetters = document.getElementById("num-letters");
 numLetters.textContent = charCount;
+
+var modal = document.getElementById('myModal');

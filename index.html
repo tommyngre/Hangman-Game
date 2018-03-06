@@ -18,6 +18,18 @@
   <p class="hidden">you just guessed '
     <span id="last-key-press"></span> '</p>
 
+<!-- Modal from W3 Schools-->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <p>Some text in the Modal..</p>
+    </div>
+  
+  </div>
+
+
   <div class="game container">
     <div class="row text-center">
       <h1 class="mx-auto">who gettin hung?</h1>
@@ -33,14 +45,16 @@
     </div>
 
     <div class="row">
-      <h2 class="col-md-8 col-sm-12 text-center">so far you've guessed:</h2>
-      <h2 class="col-md-4 col-sm-12 text-center">
+
+      <h2 class="col-md-6 col-sm-12 text-center">
         <span id="moves-left"></span> moves left
       </h2>
+      <h2 class="col-md-6 col-sm-12 text-center">so far you've guessed:</h2>
     </div>
 
     <div class="row keys-pressed">
-      <div class="col-md-8 col-sm-12 text-center">
+        <div class="col-md-6 col-sm-12"></div>
+      <div class="col-md-6 col-sm-12 text-center">
         <h2>
           <span id="keys-pressed" class=""></span>
         </h2>
@@ -53,8 +67,6 @@
     </div>
 
   </div>
-
-  <script src="jquery-3.3.1.min.js"></script>  
 
   <script src="./assets/javascript/game.js"></script>
 
