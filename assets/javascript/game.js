@@ -156,7 +156,7 @@ function drawMove(movesLeft){
   context.beginPath();
   context.ellipse(75, 58, 1, 3, 90 * Math.PI/180, 0, 2 * Math.PI);
   context.stroke();
-
+  $("#canvas").css("border-color","red");
 }
 }
 
