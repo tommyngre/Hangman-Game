@@ -5,19 +5,16 @@ var words = [
   "Lorraine", "Chief"
 ];
 
+//word = index of words array
 var word = words[Math.floor(Math.random() * Math.floor(words.length))];
-//console.log(word);
-
+//chars in word
 var charCount = word.length;
-//console.log(word + " is " + charCount + " chars");
-
-// build array of chars in var word
+//array of chars in var word
 var charAry = new Array;
 charAry = buildCharAry(word);
 function buildCharAry(word) {
   for (i = 0; i < charCount; i++) {
     charAry.push(word.charAt(i));
-    //console.log(charAry);
   }
   return charAry;
 }
@@ -27,24 +24,26 @@ var keysPressedAry = new Array;
 
 var lastKeyPress = document.getElementById("last-key-press");
 
+//returns keysPressedAry as a string 
 function keysPressedToString(keysPressedAry) {
   keysPressedString = "";
   for (i = 0; i < keysPressedAry.length; i++) {
     keysPressedString = keysPressedString + keysPressedAry[i] + " ";
   }
-  //console.log(keysPressedString);
   return keysPressedString;
 }
 
 var keysPressedString = "";
 
+//check if key pressed is an alpha
 function isLetter(key) {
-  //if one char
+  //first check if one char (as opposed to "Shift")
   if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
     return true;
   } else { return false; }
 }
 
+//check if key has not been pressed
 function isUnique(key) {
   for (i = 0; i < keysPressedAry.length; i++) {
     if (key == keysPressedAry[i]) {
@@ -55,9 +54,7 @@ function isUnique(key) {
   return true;
 }
 
-var keysPressed = document.getElementById("keys-pressed");
-var eKey = "";
-
+//draws hangman based on # moves left
 function drawMove(movesLeft){
   //console.log(movesLeft);
   if (movesLeft == parseInt(9)){
@@ -156,37 +153,39 @@ function drawMove(movesLeft){
   context.beginPath();
   context.ellipse(75, 58, 1, 3, 90 * Math.PI/180, 0, 2 * Math.PI);
   context.stroke();
-  //$("#canvas").css("border-color","red");
 }
-$("#canvas").addClass("moves-flash");
 //remove animation class *after* animation runs
-
+$("#canvas").addClass("moves-flash");
+//gameover handling
 if (!(movesLeft == 0)){
   setTimeout(function () {
     $("#canvas").removeClass("moves-flash");
   }, 1000);  
 } else {
   $("#canvas").css("background-color","red");
+  
 }
 
 }
 
+//sets gameover modal to display
 function showModal() {
   modal.style.display = "block";
 }
 
+//updates game after valid keystroke
 function updateMoves() {
   if (parseInt(movesLeft.textContent) > 1) {
     movesLeft.textContent = movesLeft.textContent - 1;
     $("#moves-left").addClass("moves-flash");
-    //remove animation class *after* animation runs
+    //remove animation class shortly after runs
     setTimeout(function () {
       $("#moves-left").removeClass("moves-flash");
     }, 1000);
-    //update graphic
+    //draw hangman
     drawMove(parseInt(movesLeft.textContent));
   } else {
-    //handle game over scenario
+    //handle gameover
     movesLeft.textContent = 0;
     $("#moves-left").addClass("final-moves-flash");
     drawMove(parseInt(0));
@@ -194,6 +193,7 @@ function updateMoves() {
   }
 }
 
+//checks if keypress is in word
 function isInWord(key) {
   var inWord = false;
   for (i = 0; i < charAry.length; i++) {
@@ -207,6 +207,7 @@ function isInWord(key) {
   return inWord;
 }
 
+//listen for key-presses
 document.onkeyup = function (e) {
   lastKeyPress.textContent = e.key;
   eKey = e.key.toLowerCase();
@@ -240,10 +241,6 @@ function htmlStr(charCount) {
 // Adapt to set modal to block when movesLeft = 0 
 
 // Adapt to have yes button that resets game
-// Or x button to just close Modal; leave hanging dude
-// span.onclick = function() {
-//   modal.style.display = "none";
-// }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
@@ -252,7 +249,8 @@ window.onclick = function(event) {
   }
 }
 
-
+var keysPressed = document.getElementById("keys-pressed");
+var eKey = "";
 
 var movesLeft = document.getElementById("moves-left");
 movesLeft.textContent = 10;
@@ -263,4 +261,4 @@ charPlaceholders.innerHTML = htmlStr(charCount);
 var numLetters = document.getElementById("num-letters");
 numLetters.textContent = charCount;
 
-var modal = document.getElementById('myModal');
+var modal = document.getElementById("gameoverModal");
