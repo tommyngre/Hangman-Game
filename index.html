@@ -18,15 +18,24 @@
   <p class="hidden">you just guessed '
     <span id="last-key-press"></span> '</p>
 
-<!-- Modal from W3 Schools-->
-<div id="myModal" class="modal">
-
-    <!-- Modal content -->
+  <!-- modal on gameover-->
+  <div id="myModal" class="modal">
     <div class="modal-content">
+      <!-- if clicked, close modal do nothing -->
       <span class="close">&times;</span>
-      <button class="btn btn-primary modal-btn"><h2 class="text-center">keep hangin!</h2></button>
+      <div class="container">
+        <div class="row">
+          <button class="btn modal-btn">
+            <!-- save game data, load a new game -->
+            <h2 class="text-center">keep hangin!</h2>
+          </button>
+          <button class="btn modal-btn">
+            <!-- close modal-open game data -->
+            <h2 class="text-center">i'm done!</h2>
+          </button>
+        </div>
+      </div>
     </div>
-  
   </div>
 
 
@@ -53,7 +62,7 @@
     </div>
 
     <div class="row keys-pressed">
-        <div class="col-md-6 col-sm-12"></div>
+      <div class="col-md-6 col-sm-12"></div>
       <div class="col-md-6 col-sm-12 text-center">
         <h2>
           <span id="keys-pressed" class=""></span>

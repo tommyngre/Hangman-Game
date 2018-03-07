@@ -169,11 +169,10 @@ if (!(movesLeft == 0)){
   $("#canvas").css("background-color","red");
 }
 
-
 }
 
 function showModal() {
-  $("#myModal").css("display","block");
+  modal.style.display = "block";
 }
 
 function updateMoves() {
@@ -222,7 +221,7 @@ document.onkeyup = function (e) {
         keysPressed.innerText = keysPressedToString(keysPressedAry);
         updateMoves();
       } else {
-
+        //nothin?
       }
     }
   }

@@ -130,11 +130,12 @@ p.hidden{
   color:black;
   margin: 0px auto 25px auto;
   padding:10px;
+  width:80%
 }
 .modal-btn:hover,.modal-btn:active,.modal-btn:focus{
   background-color:blanchedalmond;
   color:black;
-  opacity:.7;
+  opacity:.8;
 }
 
 /* The Close Button */
