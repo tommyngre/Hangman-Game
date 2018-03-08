@@ -251,15 +251,18 @@ function htmlStr(charCount) {
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-  if ((event.target == modal) || (event.target == doneButton)) {
-    modal.style.display = "none";
-  }
-}
-
-window.onclick = function (event) {
   if (event.target == moreButton) {
     modal.style.display = "none";
+    console.log("more");
     //figure out how to reset things
+  }
+  else if (event.target == doneButton) {
+    modal.style.display = "none";
+    console.log("done");
+  }
+  else if (event.target == modal) {
+    modal.style.display = "none";
+    console.log("modal");
   }
 }
 
@@ -274,8 +277,7 @@ setTimeout(function () {
 }, 1000);
 setTimeout(function () {
   $("#banner").addClass("hidden");
-}, 5000);
-
+}, 2000);
 
 
 var charPlaceholders = document.getElementById("char-placeholders");
