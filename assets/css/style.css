@@ -2,13 +2,40 @@ body{
   width: 100%;
 }
 
-.hidden{
+p.hidden, .hidden{
   display:none;
 }
 
-p.hidden{
-  display:none;
+#banner{
+  position:relative;
+  margin-top:-36px;
 }
+.start-prompt{
+  transform: rotate(359deg);
+  background-color:sandybrown;
+  padding:5px;
+  border:2px solid #000000;
+}
+#left-hang{
+  position:absolute;
+  height:60px;
+  margin-left:10px;
+  width: 2px;
+  background-color: black;
+  left:25px;
+  bottom:40px;
+}
+#right-hang{
+  position:absolute;
+  float:right;
+  height:60px;
+  margin-right:20px;
+  width: 2px;
+  background-color: black;
+  right:25px;
+  bottom:40px;
+}
+
 
 .game{
   background-color: blanchedalmond;
@@ -46,7 +73,7 @@ p.hidden{
 #canvas{
   margin-top:60px;
   border:4px solid #000000;
-  background-color: cornsilk;
+  background-color: antiquewhite;
 }
 
 @keyframes moves-flash {
@@ -88,7 +115,35 @@ p.hidden{
   color:red;
 }
 
-/* Modal Content (from W3 Schools)*/
+@keyframes lift-banner {
+  0% {
+      top: 0px;
+  }
+  100% {
+      top: -72px;
+  }
+}
+
+@-webkit-keyframes lift-banner {
+  0% {
+    top: 0px;
+}
+100% {
+    top: -72px;
+}
+}
+
+.lift-banner {
+  animation-name: lift-banner;
+  animation-duration: 5000ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-name: lift-banner;
+  -webkit-animation-duration: 5000ms;
+  -webkit-animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-in-out;
+}
+
 .modal {
   display: none;    /* hide by default */
   position: fixed;
@@ -115,6 +170,8 @@ p.hidden{
   color:black;
   margin: 25px auto 25px auto;
   padding:10px;
+  font-weight:500;
+  font-size:2rem;
 }
 .modal-btn:hover,.modal-btn:active,.modal-btn:focus{
   background-color:blanchedalmond;

@@ -1,5 +1,5 @@
 var words = [
-  "Bimp", "Bramp", "Priest", "Toger", 
+  "Bimp", "Bramp", "Priest", "Toger",
   "Nosewolf", "Lort", "Bruise", "Whitey",
   "Card", "Mary", "Glen", "Den", "Ernie",
   "Lorraine", "Chief"
@@ -55,116 +55,116 @@ function isUnique(key) {
 }
 
 //draws hangman based on # moves left
-function drawMove(movesLeft){
+function drawMove(movesLeft) {
   //console.log(movesLeft);
-  if (movesLeft == parseInt(9)){
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(90,190);
-  context.lineTo(80,175);
-  context.stroke();
-} else if (movesLeft == parseInt(8)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(80,175);
-  context.lineTo(75,100);
-  context.stroke();    
-} else if (movesLeft == parseInt(7)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(75,100);
-  context.lineTo(70,175);
-  context.stroke();    
-} else if (movesLeft == parseInt(6)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(70,175);
-  context.lineTo(60,190);
-  context.stroke();    
-} else if (movesLeft == parseInt(5)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(75,100);
-  context.lineTo(75,50);
-  context.stroke();    
-} else if (movesLeft == parseInt(4)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(75,60);
-  context.lineTo(60,140);
-  context.stroke();    
-} else if (movesLeft == parseInt(3)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(75,60);
-  context.lineTo(90,140);
-  context.stroke();    
-} else if (movesLeft == parseInt(2)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(60,140);
-  context.lineTo(57,150);
-  context.stroke();    
-  context.moveTo(60,140);
-  context.lineTo(60,150);
-  context.stroke();    
-  context.moveTo(60,140);
-  context.lineTo(63,150);
-  context.stroke();    
-} else if (movesLeft == parseInt(1)) {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.moveTo(90,140);
-  context.lineTo(87,150);
-  context.stroke();    
-  context.moveTo(90,140);
-  context.lineTo(90,150);
-  context.stroke();    
-  context.moveTo(90,140);
-  context.lineTo(93,150);
-  context.stroke();    
-} else {
-  var c = document.getElementById("canvas");
-  var context = c.getContext("2d");
-  context.lineWidth=4;
-  context.beginPath();
-  context.ellipse(90, 38, 20, 10, 155 * Math.PI/180, 0, 2 * Math.PI);
-  context.stroke();
-  //twice to thicken line
-  context.beginPath();
-  context.ellipse(90, 38, 20, 10, 155 * Math.PI/180, 0, 2 * Math.PI);
-  context.stroke();
-  //noose
-  context.moveTo(75,0);
-  context.lineTo(75,38);
-  context.stroke();    
-  context.beginPath();
-  context.ellipse(75, 55, 1, 3, 90 * Math.PI/180, 0, 2 * Math.PI);
-  context.stroke();
-  context.beginPath();
-  context.ellipse(75, 58, 1, 3, 90 * Math.PI/180, 0, 2 * Math.PI);
-  context.stroke();
-}
-//remove animation class *after* animation runs
-$("#canvas").addClass("moves-flash");
-//gameover handling
-if (!(movesLeft == 0)){
-  setTimeout(function () {
-    $("#canvas").removeClass("moves-flash");
-  }, 1000);  
-} else {
-  $("#canvas").css("background-color","red");
-  
-}
+  if (movesLeft == parseInt(9)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(90, 190);
+    context.lineTo(80, 175);
+    context.stroke();
+  } else if (movesLeft == parseInt(8)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(80, 175);
+    context.lineTo(75, 100);
+    context.stroke();
+  } else if (movesLeft == parseInt(7)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(75, 100);
+    context.lineTo(70, 175);
+    context.stroke();
+  } else if (movesLeft == parseInt(6)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(70, 175);
+    context.lineTo(60, 190);
+    context.stroke();
+  } else if (movesLeft == parseInt(5)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(75, 100);
+    context.lineTo(75, 50);
+    context.stroke();
+  } else if (movesLeft == parseInt(4)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(75, 60);
+    context.lineTo(60, 140);
+    context.stroke();
+  } else if (movesLeft == parseInt(3)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(75, 60);
+    context.lineTo(90, 140);
+    context.stroke();
+  } else if (movesLeft == parseInt(2)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(60, 140);
+    context.lineTo(57, 150);
+    context.stroke();
+    context.moveTo(60, 140);
+    context.lineTo(60, 150);
+    context.stroke();
+    context.moveTo(60, 140);
+    context.lineTo(63, 150);
+    context.stroke();
+  } else if (movesLeft == parseInt(1)) {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.moveTo(90, 140);
+    context.lineTo(87, 150);
+    context.stroke();
+    context.moveTo(90, 140);
+    context.lineTo(90, 150);
+    context.stroke();
+    context.moveTo(90, 140);
+    context.lineTo(93, 150);
+    context.stroke();
+  } else {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    context.beginPath();
+    context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
+    context.stroke();
+    //twice to thicken line
+    context.beginPath();
+    context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
+    context.stroke();
+    //noose
+    context.moveTo(75, 0);
+    context.lineTo(75, 38);
+    context.stroke();
+    context.beginPath();
+    context.ellipse(75, 55, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
+    context.stroke();
+    context.beginPath();
+    context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
+    context.stroke();
+  }
+  //remove animation class *after* animation runs
+  $("#canvas").addClass("moves-flash");
+  //gameover handling
+  if (!(movesLeft == 0)) {
+    setTimeout(function () {
+      $("#canvas").removeClass("moves-flash");
+    }, 1000);
+  } else {
+    $("#canvas").css("background-color", "red");
+
+  }
 
 }
 
@@ -175,22 +175,24 @@ function showModal() {
 
 //updates game after valid keystroke
 function updateMoves() {
-  if (parseInt(movesLeft.textContent) > 1) {
-    movesLeft.textContent = movesLeft.textContent - 1;
+  var continueGame = true;
+  movesLeft.textContent = movesLeft.textContent - 1;
+  //first check if gameover
+  if (movesLeft.textContent == 0) {
+    $("#moves-left").addClass("final-moves-flash");
+    drawMove(0);
+    showModal();
+    continueGame = false;
+  } else {
+    //add animation class, then remove after delay
     $("#moves-left").addClass("moves-flash");
-    //remove animation class shortly after runs
     setTimeout(function () {
       $("#moves-left").removeClass("moves-flash");
     }, 1000);
     //draw hangman
     drawMove(parseInt(movesLeft.textContent));
-  } else {
-    //handle gameover
-    movesLeft.textContent = 0;
-    $("#moves-left").addClass("final-moves-flash");
-    drawMove(parseInt(0));
-    showModal();
   }
+  return continueGame;
 }
 
 //checks if keypress is in word
@@ -209,20 +211,25 @@ function isInWord(key) {
 
 //listen for key-presses
 document.onkeyup = function (e) {
-  lastKeyPress.textContent = e.key;
-  eKey = e.key.toLowerCase();
-  //check if keystroke is a letter
-  if (isLetter(eKey)) {
-    //check if keystroke is new
-    if (isUnique(eKey)) {
-      //check if key is in charAry
-      if (!(isInWord(eKey))){
-        keysPressed.textContent = "";
-        keysPressedAry.push(eKey);
-        keysPressed.innerText = keysPressedToString(keysPressedAry);
-        updateMoves();
-      } else {
-        //nothin?
+  if (movesLeft.textContent == 0) {
+    showModal();
+    return;
+  } else {
+    lastKeyPress.textContent = e.key;
+    eKey = e.key.toLowerCase();
+    //check if keystroke is a letter
+    if (isLetter(eKey)) {
+      //check if keystroke is new
+      if (isUnique(eKey)) {
+        //check if key is in charAry
+        if (!(isInWord(eKey))) {
+          keysPressed.textContent = "";
+          keysPressedAry.push(eKey);
+          keysPressed.innerText = keysPressedToString(keysPressedAry);
+          var done = updateMoves();
+        } else {
+          //nothin?
+        }
       }
     }
   }
@@ -243,9 +250,16 @@ function htmlStr(charCount) {
 // Adapt to have yes button that resets game
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-      modal.style.display = "none";
+window.onclick = function (event) {
+  if ((event.target == modal) || (event.target == doneButton)) {
+    modal.style.display = "none";
+  }
+}
+
+window.onclick = function (event) {
+  if (event.target == moreButton) {
+    modal.style.display = "none";
+    //figure out how to reset things
   }
 }
 
@@ -255,6 +269,15 @@ var eKey = "";
 var movesLeft = document.getElementById("moves-left");
 movesLeft.textContent = 10;
 
+setTimeout(function () {
+  $("#banner").addClass("lift-banner");
+}, 1000);
+setTimeout(function () {
+  $("#banner").addClass("hidden");
+}, 5000);
+
+
+
 var charPlaceholders = document.getElementById("char-placeholders");
 charPlaceholders.innerHTML = htmlStr(charCount);
 
@@ -262,3 +285,5 @@ var numLetters = document.getElementById("num-letters");
 numLetters.textContent = charCount;
 
 var modal = document.getElementById("gameoverModal");
+var doneButton = document.getElementById("done-button");
+var moreButton = document.getElementById("more-button");
