@@ -21,6 +21,7 @@ var game = {
   moves: 10,
   guesses: [],
   evaluateMove: function (key) {
+    if (this.moves == 0) { return; }
     var isNew = true;
     for (i = 0; i < this.guesses.length; i++) {
       if (key == this.guesses[i]) {
@@ -45,7 +46,7 @@ var game = {
     }, 2000);
   },
   showModal: function () {
-    console.log("here");
+    console.log("show modal");
     $("#gameover-modal").css("display", "block");
     window.onclick = function (event) {
       if (event.target == moreBtn) {
@@ -62,8 +63,15 @@ var game = {
         console.log("modal");
       }
     }    
+  },
+  render: function (){
+    console.log(this.moves);
+    movesLeft.textContent = this.moves;
   }
 }
+
+var movesLeft = document.getElementById("moves-left");
+movesLeft.textContent = 10;
 
 var modal = document.getElementById("gameover-modal");
 var doneBtn = document.getElementById("done-button");
@@ -75,4 +83,6 @@ document.onkeyup = function (e) {
   if (game.moves == 0) {
     game.showModal();
   }
+  game.render();
+
 }
