@@ -176,7 +176,7 @@ function showModal() {
 //updates game after valid keystroke
 function updateMoves() {
   var continueGame = true;
-  movesLeft.textContent = movesLeft.textContent - 1;
+  // movesLeft.textContent = movesLeft.textContent - 1;
   //first check if gameover
   if (movesLeft.textContent == 0) {
     $("#moves-left").addClass("final-moves-flash");
@@ -269,8 +269,8 @@ window.onclick = function (event) {
 var keysPressed = document.getElementById("keys-pressed");
 var eKey = "";
 
-var movesLeft = document.getElementById("moves-left");
-movesLeft.textContent = 10;
+// var movesLeft = document.getElementById("moves-left");
+// movesLeft.textContent = 10;
 
 setTimeout(function () {
   $("#banner").addClass("lift-banner");
