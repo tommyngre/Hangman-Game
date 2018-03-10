@@ -1,28 +1,67 @@
 var game = {
   words: [
-    "Bimp", "Bramp", "Priest", "Toger",
-    "Nosewolf", "Lort", "Bruise", "Whitey",
-    "Card", "Mary", "Glen", "Den", "Ernie",
-    "Lorraine", "Chief"
+    "Bimp",
+    "Bramp",
+    "Priest",
+    "Toger",
+    "Nosewolf",
+    "Lort",
+    "Bruise",
+    "Whitey",
+    "Card",
+    "Mary",
+    "Glen",
+    "Den",
+    "Ernie",
+    "Lorraine",
+    "Chief",
+    "Bap"
+  ],
+  //words and bios should be same length
+  //indices should correspond
+  bios: [
+    "Bimp suffered at the hands of the togers, and suffered mightily for Toger herself",
+    "Bramp never thought marry a girl like Toger, so no wonder the engagement didn't last",
+    "Priest took care of the church and mended things between Bruise and Chief, but he also summoned the Nosewolf",
+    "Toger was an indigenous toger from Iowa, who met an unfortunate fate at the hands of the Nosewolf",
+    "What Nosewolf did to Toger was wrong, but remember he was under the curse of longing",
+    "Lort was secretly filmed by Den while she nursed a baby which wasn't hers",
+    "Bruise vowed to bridge the gap between the Black and Blue Lives Matter movements",
+    "Whitey volunteered to carry Bruise's baby in order to advance his post-racial cause",
+    "Card spoke against Priest, to none other than Pope, because he was jealous of what Priest saw",
+    "Mary denied the first couple conceived by Jones, and begat the Nosewolf",
+    "Glen suffered from dementia as he and Den co-wrote Bimpernent, a story based on Bimp and Ern",
+    "Den consented to Jane's request that he film Lort nurse her baby, and paid the price",
+    "Ernie survived the togers, but he wasn't the same afterward, until his reunion with Bimp, which didn't last",
+    "Lorraine was accidentally killed by Den, or so he and Glen thought, and Glen was glad about it until she came back",
+    "Chief occasionally dreamt he was a woman who was sexually abused by a man he arrested",
+    "Bap happened to be at Priest's church when he had a vision, which spurred the group into heroic action"
   ],
   word: '',
+  bio: '',
+  rnd: '',
   wordChars: [],
   buildWordChars: function () {
-    //console.log("buildWordChars: " + this.word);
     for (i = 0; i < this.word.length; i++) {
       this.wordChars.push(this.word.charAt(i));
-      //console.log(this.wordChars);
     }
   },
   chooseWord: function () {
-    this.word = this.words[Math.floor(Math.random() * Math.floor(this.words.length))];
+    this.rnd = Math.floor(Math.random() * Math.floor(this.words.length));
+    this.word = this.words[this.rnd];
+    this.bio = this.bios[this.rnd];
     this.buildWordChars();
+    this.render();
   },
   moves: 10,
   guesses: [],
   evaluateMove: function (key) {
-    if (this.moves == 0) { return; }
-    if (!(this.isKeyAlpha(key))) { return; };
+    if (this.moves == 0) { 
+      return; 
+    }
+    if (!(this.isKeyAlpha(key))) { 
+      return; 
+    };
     var isNew = true;
     for (i = 0; i < this.guesses.length; i++) {
       if (key == this.guesses[i]) {
@@ -97,7 +136,7 @@ var game = {
       context.moveTo(90, 140);
       context.lineTo(93, 150);
       context.stroke();
-    } else {
+    } else if (this.moves == 0) {
       context.beginPath();
       context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
       context.stroke();
@@ -115,37 +154,18 @@ var game = {
       context.beginPath();
       context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
       context.stroke();
-    }
-    //remove animation class *after* animation runs
-    $("#canvas").addClass("moves-flash");
-    //gameover handling
-    console.log(this.moves);
-    if (!(this.moves == 0)) {
-      setTimeout(function () {
-        $("#canvas").removeClass("moves-flash");
-      }, 1000);
     } else {
-      $("#canvas").css("background-color", "red");
-    }
+      //nothing 
+    };
+    //$("#canvas").addClass("moves-flash");
   },
   isKeyAlpha: function (key) {
-    //console.log("checkin if key is alpha");
     if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
       return true;
     } else { return false; }
   },
-  getKeystrokes: function () {
-    document.onkeyup = function (e) {
-      this.handleMove(e.key);
-      if (this.moves == 0) {
-        this.showModal();
-      }
-      this.render();
-    }
-  },
   startGame: function () {
     this.chooseWord();
-    this.getKeystrokes();
     setTimeout(function () {
       $("#banner").addClass("lift-banner");
     }, 1000);
@@ -159,34 +179,61 @@ var game = {
       html = html + "<div id=\"charDiv" + i + "\" class=\"charDiv\"></div>";
     }
     html = html + "</div>";
-    //console.log(html);
     charPlaceholders.innerHTML = html;
   },
+  fillInLetters: function (key) {
+    for (i = 0; i < this.word.length; i++) {
+      if (key == this.word.charAt(i)) {
+        var charInWord = document.getElementById("charDiv" + i);
+        charInWord.textContent = key;
+        console.log(charInWord);
+        console.log("key: " + key + " index: "+ i + " letter at index: " + this.word.charAt(i));
+      }
+    }  
+  }
+  ,
   showModal: function () {
-    console.log("show modal");
+    wordModal.textContent = this.word;
+    console.log(this.bio[this.rnd]);
+    bioModal.textContent = this.bios[this.rnd];
+    outcome.textContent = " got hung!";
     $("#gameover-modal").css("display", "block");
     window.onclick = function (event) {
       if (event.target == moreBtn) {
         modal.style.display = "none";
-        //console.log("keep hangin!");
         //figure out how to reset things
       }
       else if (event.target == doneBtn) {
         modal.style.display = "none";
-        //console.log("done hangin");
       }
       else if (event.target == modal) {
         modal.style.display = "none";
-        console.log("modal");
       }
     }
   },
+  guessesToString: function () {
+    var str = "";
+    for (i = 0; i < this.guesses.length; i++) {
+      str = str + " " + this.guesses[i];
+    }
+    return str;
+  }
+  ,
   render: function () {
-    console.log(this.moves);
+    //console.log(this.moves);
     movesLeft.textContent = this.moves;
     this.drawLetters();
-    keysPressed.textContent = this.guesses;
+    keysPressed.textContent = this.guessesToString();
     this.drawMove();
+    //gameover handling
+    if (!(this.moves == 0)) {
+      setTimeout(function () {
+        $("#canvas").removeClass("moves-flash");
+      }, 1000);
+    } else {
+      $("#canvas").css("background-color", "red");
+    }
+
   }
 }
 
@@ -200,19 +247,16 @@ var keysPressed = document.getElementById("keys-pressed");
 var modal = document.getElementById("gameover-modal");
 var doneBtn = document.getElementById("done-button");
 var moreBtn = document.getElementById("more-button");
-
 var wordModal = document.getElementById("word");
-wordModal.textContent = game.word;
-console.log(game.word);
+var bioModal = document.getElementById("bio");
 var outcome = document.getElementById("outcome");
-outcome.textContent = " got hung!";
 
 game.startGame();
 document.onkeyup = function (e) {
   game.evaluateMove(e.key);
+  game.fillInLetters(e.key);
   if (game.moves == 0) {
     game.showModal();
   }
   game.render();
-
 }
