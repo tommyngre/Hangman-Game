@@ -1,4 +1,4 @@
-var game = {
+var dictionary = {
   words: [
     "Bimp",
     "Bramp",
@@ -36,7 +36,12 @@ var game = {
     "Lorraine was accidentally killed by Den, or so he and Glen thought, and Glen was glad about it until she came back",
     "Chief occasionally dreamt he was a woman who was sexually abused by a man he arrested",
     "Bap happened to be at Priest's church when he had a vision, which spurred the group into heroic action"
+  ,
   ],
+  moves: 10,  
+}
+
+var game = {
   word: '',
   bio: '',
   key: '',
@@ -48,9 +53,9 @@ var game = {
     }
   },
   chooseWord: function () {
-    this.rnd = Math.floor(Math.random() * Math.floor(this.words.length));
-    this.word = this.words[this.rnd];
-    this.bio = this.bios[this.rnd];
+    this.rnd = Math.floor(Math.random() * Math.floor(dictionary.words.length));
+    this.word = dictionary.words[this.rnd];
+    this.bio = dictionary.bios[this.rnd];
     this.buildWordChars();
     this.render();
   },
@@ -60,8 +65,8 @@ var game = {
     if (this.moves == 0) {
         return;
     }
-    if (!(this.isKeyAlpha(key))) {
-      // return;
+    if (!(this.isKeyAlpha(key) == true)) {
+        return;
     };
     var isNew = true;
     for (i = 0; i < this.guesses.length; i++) {
@@ -177,8 +182,15 @@ var game = {
       return true;
     } else { return false; }
   },
+  clearStuff: function (){
+    this.moves = dictionary.moves;
+    this.guesses = [''];
+    //somehow clear canvas
+  },
   startGame: function () {
+    this.clearStuff();
     this.chooseWord();
+    console.log(this.word);
     this.drawLetters();
     setTimeout(function () {
       $("#banner").addClass("lift-banner");
@@ -202,12 +214,12 @@ var game = {
   },
   showModal: function () {
     wordModal.textContent = this.word;
-    //console.log(this.bio[this.rnd]);
-    bioModal.textContent = this.bios[this.rnd];
+    bioModal.textContent = dictionary.bios[this.rnd];
     outcome.textContent = " got hung!";
     $("#gameover-modal").css("display", "block");
     var scope = this;
     window.onclick = function (event) {
+      scope.saveToLocalStorage();
       if (event.target == moreBtn) {
         modal.style.display = "none";
         //reset game
@@ -221,6 +233,16 @@ var game = {
       }
     }
   },
+  saveToLocalStorage: function() {
+    console.log(JSON.stringify(this));
+    localStorage.setItem("game", JSON.stringify(this));
+    var savedGameContent = $("<div>");
+    var savedGame=localStorage.getItem("game");
+    savedGame=JSON.parse(savedGame);
+    $("#saved-games")
+    .append(savedGameContent)
+    .text(savedGame.word + " was hung after " + savedGame.word.length + " guesses.");
+  },
   guessesToString: function () {
     var str = "";
     for (i = 0; i < this.guesses.length; i++) {
@@ -229,7 +251,6 @@ var game = {
     return str;
   }
   ,
-  gameoverSetting: false,
   render: function () {
     movesLeft.textContent = this.moves;
     keysPressed.textContent = this.guessesToString();
@@ -247,7 +268,7 @@ var game = {
 }
 
 var movesLeft = document.getElementById("moves-left");
-movesLeft.textContent = 10;
+movesLeft.textContent = dictionary.moves;
 
 var charPlaceholders = document.getElementById("char-placeholders");
 
