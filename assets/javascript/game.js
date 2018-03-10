@@ -1,291 +1,262 @@
-var words = [
-  "Bimp", "Bramp", "Priest", "Toger",
-  "Nosewolf", "Lort", "Bruise", "Whitey",
-  "Card", "Mary", "Glen", "Den", "Ernie",
-  "Lorraine", "Chief"
-];
-
-//word = index of words array
-var word = words[Math.floor(Math.random() * Math.floor(words.length))];
-//chars in word
-var charCount = word.length;
-//array of chars in var word
-var charAry = new Array;
-charAry = buildCharAry(word);
-function buildCharAry(word) {
-  for (i = 0; i < charCount; i++) {
-    charAry.push(word.charAt(i));
-  }
-  return charAry;
-}
-
-//add keys pressed by user to array
-var keysPressedAry = new Array;
-
-var lastKeyPress = document.getElementById("last-key-press");
-
-//returns keysPressedAry as a string 
-function keysPressedToString(keysPressedAry) {
-  keysPressedString = "";
-  for (i = 0; i < keysPressedAry.length; i++) {
-    keysPressedString = keysPressedString + keysPressedAry[i] + " ";
-  }
-  return keysPressedString;
-}
-
-var keysPressedString = "";
-
-//check if key pressed is an alpha
-function isLetter(key) {
-  //first check if one char (as opposed to "Shift")
-  if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
-    return true;
-  } else { return false; }
-}
-
-//check if key has not been pressed
-function isUnique(key) {
-  for (i = 0; i < keysPressedAry.length; i++) {
-    if (key == keysPressedAry[i]) {
-      //console.log(key + " key pressed already");
-      return false;
+var game = {
+  words: [
+    "Bimp",
+    "Bramp",
+    "Priest",
+    "Toger",
+    "Nosewolf",
+    "Lort",
+    "Bruise",
+    "Whitey",
+    "Card",
+    "Mary",
+    "Glen",
+    "Den",
+    "Ernie",
+    "Lorraine",
+    "Chief",
+    "Bap"
+  ],
+  //words and bios should be same length
+  //indices should correspond
+  bios: [
+    "Bimp suffered at the hands of the togers, and suffered mightily for Toger herself",
+    "Bramp never thought marry a girl like Toger, so no wonder the engagement didn't last",
+    "Priest took care of the church and mended things between Bruise and Chief, but he also summoned the Nosewolf",
+    "Toger was an indigenous toger from Iowa, who met an unfortunate fate at the hands of the Nosewolf",
+    "What Nosewolf did to Toger was wrong, but remember he was under the curse of longing",
+    "Lort was secretly filmed by Den while she nursed a baby which wasn't hers",
+    "Bruise vowed to bridge the gap between the Black and Blue Lives Matter movements",
+    "Whitey volunteered to carry Bruise's baby in order to advance his post-racial cause",
+    "Card spoke against Priest, to none other than Pope, because he was jealous of what Priest saw",
+    "Mary denied the first couple conceived by Jones, and begat the Nosewolf",
+    "Glen suffered from dementia as he and Den co-wrote Bimpernent, a story based on Bimp and Ern",
+    "Den consented to Jane's request that he film Lort nurse her baby, and paid the price",
+    "Ernie survived the togers, but he wasn't the same afterward, until his reunion with Bimp, which didn't last",
+    "Lorraine was accidentally killed by Den, or so he and Glen thought, and Glen was glad about it until she came back",
+    "Chief occasionally dreamt he was a woman who was sexually abused by a man he arrested",
+    "Bap happened to be at Priest's church when he had a vision, which spurred the group into heroic action"
+  ],
+  word: '',
+  bio: '',
+  key: '',
+  rnd: '',
+  wordChars: [],
+  buildWordChars: function () {
+    for (i = 0; i < this.word.length; i++) {
+      this.wordChars.push(this.word.charAt(i));
     }
-  }
-  return true;
-}
-
-//draws hangman based on # moves left
-function drawMove(movesLeft) {
-  //console.log(movesLeft);
-  if (movesLeft == parseInt(9)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(90, 190);
-    context.lineTo(80, 175);
-    context.stroke();
-  } else if (movesLeft == parseInt(8)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(80, 175);
-    context.lineTo(75, 100);
-    context.stroke();
-  } else if (movesLeft == parseInt(7)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(75, 100);
-    context.lineTo(70, 175);
-    context.stroke();
-  } else if (movesLeft == parseInt(6)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(70, 175);
-    context.lineTo(60, 190);
-    context.stroke();
-  } else if (movesLeft == parseInt(5)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(75, 100);
-    context.lineTo(75, 50);
-    context.stroke();
-  } else if (movesLeft == parseInt(4)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(75, 60);
-    context.lineTo(60, 140);
-    context.stroke();
-  } else if (movesLeft == parseInt(3)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(75, 60);
-    context.lineTo(90, 140);
-    context.stroke();
-  } else if (movesLeft == parseInt(2)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(60, 140);
-    context.lineTo(57, 150);
-    context.stroke();
-    context.moveTo(60, 140);
-    context.lineTo(60, 150);
-    context.stroke();
-    context.moveTo(60, 140);
-    context.lineTo(63, 150);
-    context.stroke();
-  } else if (movesLeft == parseInt(1)) {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.moveTo(90, 140);
-    context.lineTo(87, 150);
-    context.stroke();
-    context.moveTo(90, 140);
-    context.lineTo(90, 150);
-    context.stroke();
-    context.moveTo(90, 140);
-    context.lineTo(93, 150);
-    context.stroke();
-  } else {
-    var c = document.getElementById("canvas");
-    var context = c.getContext("2d");
-    context.lineWidth = 4;
-    context.beginPath();
-    context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
-    context.stroke();
-    //twice to thicken line
-    context.beginPath();
-    context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
-    context.stroke();
-    //noose
-    context.moveTo(75, 0);
-    context.lineTo(75, 38);
-    context.stroke();
-    context.beginPath();
-    context.ellipse(75, 55, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
-    context.stroke();
-    context.beginPath();
-    context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
-    context.stroke();
-  }
-  //remove animation class *after* animation runs
-  $("#canvas").addClass("moves-flash");
-  //gameover handling
-  if (!(movesLeft == 0)) {
-    setTimeout(function () {
-      $("#canvas").removeClass("moves-flash");
-    }, 1000);
-  } else {
-    $("#canvas").css("background-color", "red");
-
-  }
-
-}
-
-//sets gameover modal to display
-function showModal() {
-  modal.style.display = "block";
-}
-
-//updates game after valid keystroke
-function updateMoves() {
-  var continueGame = true;
-  movesLeft.textContent = movesLeft.textContent - 1;
-  //first check if gameover
-  if (movesLeft.textContent == 0) {
-    $("#moves-left").addClass("final-moves-flash");
-    drawMove(0);
-    showModal();
-    continueGame = false;
-  } else {
-    //add animation class, then remove after delay
-    $("#moves-left").addClass("moves-flash");
-    setTimeout(function () {
-      $("#moves-left").removeClass("moves-flash");
-    }, 1000);
-    //draw hangman
-    drawMove(parseInt(movesLeft.textContent));
-  }
-  return continueGame;
-}
-
-//checks if keypress is in word
-function isInWord(key) {
-  var inWord = false;
-  for (i = 0; i < charAry.length; i++) {
-    if ((key == charAry[i]) || (key.toUpperCase() == charAry[i])) {
-      //console.log(key + " appears in " + word)
-      var charInWord = document.getElementById("charDiv" + i);
-      charInWord.textContent = key;
-      inWord = true;
+  },
+  chooseWord: function () {
+    this.rnd = Math.floor(Math.random() * Math.floor(this.words.length));
+    this.word = this.words[this.rnd];
+    this.bio = this.bios[this.rnd];
+    this.buildWordChars();
+    this.render();
+  },
+  moves: 10,
+  guesses: [],
+  evaluateMove: function (key) {
+    if (this.moves == 0) {
+      return;
     }
-  }
-  return inWord;
-}
-
-//listen for key-presses
-document.onkeyup = function (e) {
-  if (movesLeft.textContent == 0) {
-    showModal();
-    return;
-  } else {
-    lastKeyPress.textContent = e.key;
-    eKey = e.key.toLowerCase();
-    //check if keystroke is a letter
-    if (isLetter(eKey)) {
-      //check if keystroke is new
-      if (isUnique(eKey)) {
-        //check if key is in charAry
-        if (!(isInWord(eKey))) {
-          keysPressed.textContent = "";
-          keysPressedAry.push(eKey);
-          keysPressed.innerText = keysPressedToString(keysPressedAry);
-          var done = updateMoves();
-        } else {
-          //nothin?
-        }
+    if (!(this.isKeyAlpha(key))) {
+      return;
+    };
+    var isNew = true;
+    for (i = 0; i < this.guesses.length; i++) {
+      if (key == this.guesses[i]) {
+        //console.log(key + " already guessed");
+        isNew = false;
+      } else { }
+    };
+    if (isNew) {
+      this.guesses.push(key);
+      this.moves--;
+      //add animation class, then remove after delay
+      $("#moves-left").addClass("moves-flash");
+      setTimeout(function () {
+        $("#moves-left").removeClass("moves-flash");
+      }, 1000);
+      //console.log(this.moves + " moves left");
+      //console.log(game.guesses + " guessed so far");
+    }
+  },
+  writeLetters: function () {
+    //loop through new divs, populate guessed chars
+    for (i = 0; i < this.word.length; i++) {
+      console.log("key: " + this.key + " charAt: " + this.word.charAt(i));
+      if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
+        $("#charDiv" + i).text(this.key);
       }
     }
+  },
+  drawMove: function () {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    if (this.moves == 10) {
+      //nothin 
+    };
+    if (this.moves == 9) {
+      context.moveTo(90, 190);
+      context.lineTo(80, 175);
+      context.stroke();
+    } else if (this.moves == 8) {
+      context.moveTo(80, 175);
+      context.lineTo(75, 100);
+      context.stroke();
+    } else if (this.moves == 7) {
+      context.moveTo(75, 100);
+      context.lineTo(70, 175);
+      context.stroke();
+    } else if (this.moves == 6) {
+      context.moveTo(70, 175);
+      context.lineTo(60, 190);
+      context.stroke();
+    } else if (this.moves == 5) {
+      context.moveTo(75, 100);
+      context.lineTo(75, 50);
+      context.stroke();
+    } else if (this.moves == 4) {
+      context.moveTo(75, 60);
+      context.lineTo(60, 140);
+      context.stroke();
+    } else if (this.moves == 3) {
+      context.moveTo(75, 60);
+      context.lineTo(90, 140);
+      context.stroke();
+    } else if (this.moves == 2) {
+      context.moveTo(60, 140);
+      context.lineTo(57, 150);
+      context.stroke();
+      context.moveTo(60, 140);
+      context.lineTo(60, 150);
+      context.stroke();
+      context.moveTo(60, 140);
+      context.lineTo(63, 150);
+      context.stroke();
+    } else if (this.moves == 1) {
+      context.moveTo(90, 140);
+      context.lineTo(87, 150);
+      context.stroke();
+      context.moveTo(90, 140);
+      context.lineTo(90, 150);
+      context.stroke();
+      context.moveTo(90, 140);
+      context.lineTo(93, 150);
+      context.stroke();
+    } else if (this.moves == 0) {
+      context.beginPath();
+      context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      //twice to thicken line
+      context.beginPath();
+      context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      //noose
+      context.moveTo(75, 0);
+      context.lineTo(75, 38);
+      context.stroke();
+      context.beginPath();
+      context.ellipse(75, 55, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      context.beginPath();
+      context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+    } else {
+      //nothing 
+    };
+    //$("#canvas").addClass("moves-flash");
+  },
+  isKeyAlpha: function (key) {
+    if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
+      return true;
+    } else { return false; }
+  },
+  startGame: function () {
+    this.chooseWord();
+    this.drawLetters();
+    setTimeout(function () {
+      $("#banner").addClass("lift-banner");
+    }, 1000);
+    setTimeout(function () {
+      $("#banner").addClass("hidden");
+    }, 2000);
+  },
+  drawLetters: function () {
+    var html = "<div class=\"\">";
+    for (i = 0; i < this.word.length; i++) {
+      html = html + "<div id=\"charDiv" + i + "\" class=\"charDiv\"></div>";
+    }
+    html = html + "</div>";
+    charPlaceholders.innerHTML = html;
+  },
+  showModal: function () {
+    wordModal.textContent = this.word;
+    console.log(this.bio[this.rnd]);
+    bioModal.textContent = this.bios[this.rnd];
+    outcome.textContent = " got hung!";
+    $("#gameover-modal").css("display", "block");
+    window.onclick = function (event) {
+      if (event.target == moreBtn) {
+        modal.style.display = "none";
+        //figure out how to reset things
+      }
+      else if (event.target == doneBtn) {
+        modal.style.display = "none";
+      }
+      else if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  },
+  guessesToString: function () {
+    var str = "";
+    for (i = 0; i < this.guesses.length; i++) {
+      str = str + " " + this.guesses[i];
+    }
+    return str;
   }
-};
+  ,
+  render: function () {
+    //console.log(this.moves);
+    movesLeft.textContent = this.moves;
+    keysPressed.textContent = this.guessesToString();
+    this.writeLetters();
+    this.drawMove();
+    //gameover handling
+    if (!(this.moves == 0)) {
+      setTimeout(function () {
+        $("#canvas").removeClass("moves-flash");
+      }, 1000);
+    } else {
+      $("#canvas").css("background-color", "red");
+    }
 
-function htmlStr(charCount) {
-  var str = "<div class=\"\">";
-  for (i = 0; i < charCount; i++) {
-    str = str + "<div id=\"charDiv" + i + "\" class=\"charDiv\"></div>";
-  }
-  str = str + "</div>";
-  return str;
-};
-
-/* Code for Modal */
-// Adapt to set modal to block when movesLeft = 0 
-
-// Adapt to have yes button that resets game
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-  if (event.target == moreButton) {
-    modal.style.display = "none";
-    console.log("more");
-    //figure out how to reset things
-  }
-  else if (event.target == doneButton) {
-    modal.style.display = "none";
-    console.log("done");
-  }
-  else if (event.target == modal) {
-    modal.style.display = "none";
-    console.log("modal");
   }
 }
-
-var keysPressed = document.getElementById("keys-pressed");
-var eKey = "";
 
 var movesLeft = document.getElementById("moves-left");
 movesLeft.textContent = 10;
 
-setTimeout(function () {
-  $("#banner").addClass("lift-banner");
-}, 1000);
-setTimeout(function () {
-  $("#banner").addClass("hidden");
-}, 2000);
-
-
 var charPlaceholders = document.getElementById("char-placeholders");
-charPlaceholders.innerHTML = htmlStr(charCount);
 
-var numLetters = document.getElementById("num-letters");
-numLetters.textContent = charCount;
+var keysPressed = document.getElementById("keys-pressed");
 
-var modal = document.getElementById("gameoverModal");
-var doneButton = document.getElementById("done-button");
-var moreButton = document.getElementById("more-button");
+var modal = document.getElementById("gameover-modal");
+var doneBtn = document.getElementById("done-button");
+var moreBtn = document.getElementById("more-button");
+var wordModal = document.getElementById("word");
+var bioModal = document.getElementById("bio");
+var outcome = document.getElementById("outcome");
+
+game.startGame();
+document.onkeyup = function (e) {
+  game.key = e.key;
+  game.evaluateMove(game.key);
+  if (game.moves == 0) {
+    game.showModal();
+  }
+  game.render();
+}
