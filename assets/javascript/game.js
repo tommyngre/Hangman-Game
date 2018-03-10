@@ -85,7 +85,7 @@ var game = {
   writeLetters: function () {
     //loop through new divs, populate guessed chars
     for (i = 0; i < this.word.length; i++) {
-      console.log("key: " + this.key + " charAt: " + this.word.charAt(i));
+      //console.log("key: " + this.key + " charAt: " + this.word.charAt(i));
       if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
         $("#charDiv" + i).text(this.key);
       }
@@ -219,6 +219,7 @@ var game = {
     return str;
   }
   ,
+  gameoverSetting: false,
   render: function () {
     //console.log(this.moves);
     movesLeft.textContent = this.moves;
@@ -233,7 +234,6 @@ var game = {
     } else {
       $("#canvas").css("background-color", "red");
     }
-
   }
 }
 
@@ -256,7 +256,12 @@ document.onkeyup = function (e) {
   game.key = e.key;
   game.evaluateMove(game.key);
   if (game.moves == 0) {
-    game.showModal();
+    console.log("here" + gameoverSetting);
+    if (game.gameoverSetting == true) {
+      console.log("here" + gameoverSetting);
+      game.showModal();
+      game.gameoverSetting = true;
+    }
   }
   game.render();
 }
