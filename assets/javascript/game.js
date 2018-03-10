@@ -1,3 +1,5 @@
+var gameIndex = 0;
+
 var dictionary = {
   words: [
     "Bimp",
@@ -36,9 +38,9 @@ var dictionary = {
     "Lorraine was accidentally killed by Den, or so he and Glen thought, and Glen was glad about it until she came back",
     "Chief occasionally dreamt he was a woman who was sexually abused by a man he arrested",
     "Bap happened to be at Priest's church when he had a vision, which spurred the group into heroic action"
-  ,
+    ,
   ],
-  moves: 10,  
+  moves: 10,
 }
 
 var game = {
@@ -63,10 +65,10 @@ var game = {
   guesses: [],
   evaluateMove: function (key) {
     if (this.moves == 0) {
-        return;
+      return;
     }
     if (!(this.isKeyAlpha(key) == true)) {
-        return;
+      return;
     };
     var isNew = true;
     for (i = 0; i < this.guesses.length; i++) {
@@ -80,7 +82,7 @@ var game = {
       this.moves--;
       if (this.moves == 0) {
         this.showModal();
-    }
+      }
       //add animation class, then remove after delay
       $("#moves-left").addClass("moves-flash");
       setTimeout(function () {
@@ -182,12 +184,14 @@ var game = {
       return true;
     } else { return false; }
   },
-  clearStuff: function (){
+  clearStuff: function () {
     this.moves = dictionary.moves;
+    this.wordChars = [''];
     this.guesses = [''];
     //somehow clear canvas
   },
   startGame: function () {
+    gameIndex++;
     this.clearStuff();
     this.chooseWord();
     console.log(this.word);
@@ -219,10 +223,9 @@ var game = {
     $("#gameover-modal").css("display", "block");
     var scope = this;
     window.onclick = function (event) {
-      scope.saveToLocalStorage();
       if (event.target == moreBtn) {
         modal.style.display = "none";
-        //reset game
+        scope.saveToLocalStorage();
         scope.startGame();
       }
       else if (event.target == doneBtn) {
@@ -233,16 +236,20 @@ var game = {
       }
     }
   },
-  saveToLocalStorage: function() {
-    console.log(JSON.stringify(this));
-    localStorage.setItem("game", JSON.stringify(this));
-    var savedGameContent = $("<div>");
-    var savedGame=localStorage.getItem("game");
-    savedGame=JSON.parse(savedGame);
-    $("#saved-games")
-    .append(savedGameContent)
-    .text(savedGame.word + " was hung after " + savedGame.word.length + " guesses.");
-  },
+  saveToLocalStorage: function () {
+    //console.log(JSON.stringify(this));
+    var n = "game"+(gameIndex);
+    console.log(n);
+    localStorage.setItem(n, JSON.stringify(this));
+      var data = JSON.parse(localStorage.getItem(n));
+      //console.log(data);
+      //console.log(data.word + " was hung after you guessed" + data.guesses);
+      var div = $("<div>");
+      div.attr(n);
+      div.addClass("row game-data");
+      div.html("<h2>" + data.word + " was hung after you guessed" + data.guesses + "</h2>");
+      $("#saved-games").append(div);
+    },
   guessesToString: function () {
     var str = "";
     for (i = 0; i < this.guesses.length; i++) {

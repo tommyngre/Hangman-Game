@@ -40,7 +40,13 @@ p.hidden, .hidden{
 .game{
   background-color: blanchedalmond;
   margin:20px auto 20px auto;
-  padding:30px 0px;
+  padding:30px 0px 0px 0px;
+}
+
+.game-data{
+  background-color: seashell;
+  margin:0;
+  padding-left:40px;
 }
 
 #char-placeholders{
@@ -71,9 +77,9 @@ p.hidden, .hidden{
 }
 
 #canvas{
-  margin-top:60px;
+  margin:60px 0px 30px 0px;
   border:4px solid #000000;
-  background-color: antiquewhite;
+  background-color: seashell;
 }
 
 @keyframes moves-flash {
