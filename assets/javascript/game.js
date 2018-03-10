@@ -58,10 +58,10 @@ var game = {
   guesses: [],
   evaluateMove: function (key) {
     if (this.moves == 0) {
-      return;
+        return;
     }
     if (!(this.isKeyAlpha(key))) {
-      return;
+      // return;
     };
     var isNew = true;
     for (i = 0; i < this.guesses.length; i++) {
@@ -73,6 +73,9 @@ var game = {
     if (isNew) {
       this.guesses.push(key);
       this.moves--;
+      if (this.moves == 0) {
+        this.showModal();
+    }
       //add animation class, then remove after delay
       $("#moves-left").addClass("moves-flash");
       setTimeout(function () {
@@ -81,11 +84,11 @@ var game = {
       //console.log(this.moves + " moves left");
       //console.log(game.guesses + " guessed so far");
     }
+    this.render();
   },
   writeLetters: function () {
     //loop through new divs, populate guessed chars
     for (i = 0; i < this.word.length; i++) {
-      //console.log("key: " + this.key + " charAt: " + this.word.charAt(i));
       if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
         $("#charDiv" + i).text(this.key);
       }
@@ -183,6 +186,11 @@ var game = {
     setTimeout(function () {
       $("#banner").addClass("hidden");
     }, 2000);
+    var scope = this;
+    document.onkeyup = function (e) {
+      scope.key = e.key;
+      game.evaluateMove(scope.key);
+    }
   },
   drawLetters: function () {
     var html = "<div class=\"\">";
@@ -194,14 +202,16 @@ var game = {
   },
   showModal: function () {
     wordModal.textContent = this.word;
-    console.log(this.bio[this.rnd]);
+    //console.log(this.bio[this.rnd]);
     bioModal.textContent = this.bios[this.rnd];
     outcome.textContent = " got hung!";
     $("#gameover-modal").css("display", "block");
+    var scope = this;
     window.onclick = function (event) {
       if (event.target == moreBtn) {
         modal.style.display = "none";
-        //figure out how to reset things
+        //reset game
+        scope.startGame();
       }
       else if (event.target == doneBtn) {
         modal.style.display = "none";
@@ -221,7 +231,6 @@ var game = {
   ,
   gameoverSetting: false,
   render: function () {
-    //console.log(this.moves);
     movesLeft.textContent = this.moves;
     keysPressed.textContent = this.guessesToString();
     this.writeLetters();
@@ -252,16 +261,3 @@ var bioModal = document.getElementById("bio");
 var outcome = document.getElementById("outcome");
 
 game.startGame();
-document.onkeyup = function (e) {
-  game.key = e.key;
-  game.evaluateMove(game.key);
-  if (game.moves == 0) {
-    console.log("here" + gameoverSetting);
-    if (game.gameoverSetting == true) {
-      console.log("here" + gameoverSetting);
-      game.showModal();
-      game.gameoverSetting = true;
-    }
-  }
-  game.render();
-}
