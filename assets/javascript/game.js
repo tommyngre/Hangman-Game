@@ -106,10 +106,6 @@ var game = {
       if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
         $("#charDiv" + i).text(this.key);
         this.goodguesses.push(this.key);
-        //console.log("goodguesses length:" + this.goodguesses.length);
-        //console.log(this.goodguesses);
-        //console.log("word length:" + this.word.length);
-        //console.log(this.word);
         if ((this.goodguesses.length - 1) == this.word.length) {
           this.gameover();
         }
@@ -200,10 +196,10 @@ var game = {
       context.beginPath();
       context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
       context.stroke();
-      //red background on gameover
+      //grim red background on gameover
       $("#canvas").css("background-color", "red");
     } else {
-      //nothing 
+      //nothin
     };
   },
   isKeyAlpha: function (key) {
@@ -280,8 +276,7 @@ var game = {
     for (i = 0; i < localStorage.length; i++) {
       var n = "game" + (i + 1); // because gameIndex starts at 1
       var data = JSON.parse(localStorage.getItem(n));
-      //console.log(data);
-      //console.log(data.word + " was hung after you guessed" + data.guesses);
+      //console.log(data.word);
       var div = $("<div>");
       div.attr(n);
       div.addClass("row game-data");
@@ -300,7 +295,7 @@ var game = {
     this.clearStuff();
     this.loadStoredGames();
     this.chooseWord();
-    console.log(this.word);
+    //console.log(this.word);
     this.drawLetters();
     setTimeout(function () {
       $("#banner").addClass("lift-banner");
