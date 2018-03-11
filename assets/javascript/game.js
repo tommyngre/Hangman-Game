@@ -67,7 +67,11 @@ var game = {
     if (!(this.isKeyAlpha(key) == true)) {
       return;
     };
-    //if in var word, render and stop
+    //if in var word, and already guessed, stop
+    if (this.goodguesses.indexOf(this.key) > -1){
+      //do nothing
+      return;
+    }
     for (i=0; i<this.word.length; i++){
       if (key.toLowerCase() == this.word.charAt(i).toLowerCase()){
         this.render();
@@ -102,14 +106,15 @@ var game = {
   },
   writeLetters: function () {
     //loop through new divs, populate guessed chars
-    console.log("here " + this.key);
     for (i = 0; i < this.word.length; i++) {
       if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
         $("#charDiv" + i).text(this.key);
         this.goodguesses.push(this.key);
-        if ((this.goodguesses.length) == this.word.length+1){
-          console.log("good guesses:" + this.goodguesses.length);
-          console.log("word length:" + this.word.length);
+        console.log("goodguesses length:" + this.goodguesses.length);
+        console.log(this.goodguesses);
+        console.log("word length:" + this.word.length);
+        console.log(this.word);
+        if ((this.goodguesses.length-1) == this.word.length){
           this.gameover();
         }
       }
@@ -255,7 +260,6 @@ var game = {
   saveToLocalStorage: function () {
     //console.log(JSON.stringify(this));
     var n = "game"+(gameIndex);
-    console.log(n);
     localStorage.setItem(n, JSON.stringify(this));
     $("#saved-games").html("");
   },
@@ -277,7 +281,6 @@ var game = {
   loadFromLocalStorage: function(){
   for (i = 0; i < localStorage.length; i++) {
     var n = "game"+(i+1); // because gameIndex starts at 1
-    console.log(n);
     var data = JSON.parse(localStorage.getItem(n));
     //console.log(data);
     //console.log(data.word + " was hung after you guessed" + data.guesses);
