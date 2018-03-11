@@ -50,7 +50,6 @@ var game = {
   key: '',
   rnd: '',
   wonGame: '',
-
   chooseWord: function () {
     this.rnd = Math.floor(Math.random() * Math.floor(dictionary.words.length));
     this.word = dictionary.words[this.rnd];
@@ -58,7 +57,7 @@ var game = {
     this.render();
   },
   moves: dictionary.moves,
-  guesses: [],
+  badguesses: [],
   evaluateMove: function (key) {
     //if 0 moves, stop
     if (this.moves == 0) {
@@ -77,14 +76,14 @@ var game = {
     }
 
     var isNew = true;
-    for (i = 0; i < this.guesses.length; i++) {
-      if (key == this.guesses[i]) {
+    for (i = 0; i < this.badguesses.length; i++) {
+      if (key == this.badguesses[i]) {
         //console.log(key + " already guessed");
         isNew = false;
       } else { }
     };
     if (isNew) {
-      this.guesses.push(key);
+      this.badguesses.push(key);
       this.moves--;
       if (this.moves == 0) {
         this.wonGame = false;
@@ -108,7 +107,9 @@ var game = {
       if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
         $("#charDiv" + i).text(this.key);
         this.goodguesses.push(this.key);
-        if ((this.goodguesses.length-1) == this.word.length){
+        if ((this.goodguesses.length) == this.word.length+1){
+          console.log("good guesses:" + this.goodguesses.length);
+          console.log("word length:" + this.word.length);
           this.gameover();
         }
       }
@@ -210,7 +211,8 @@ var game = {
   },
   clearStuff: function () {
     this.moves = dictionary.moves;
-    this.guesses = [''];
+    this.badguesses = [''];
+    this.goodguesses = [''];
     //clear canvas
     var c = document.getElementById("canvas");
     var context = c.getContext("2d");
@@ -259,8 +261,8 @@ var game = {
   },
   guessesToString: function () {
     var str = "";
-    for (i = 0; i < this.guesses.length; i++) {
-      str = str + " " + this.guesses[i];
+    for (i = 0; i < this.badguesses.length; i++) {
+      str = str + " " + this.badguesses[i];
     }
     return str;
   }
