@@ -290,7 +290,7 @@ var game = {
     } else { 
       outcome = " survived, with " + data.moves + " guesses to spare!";
     }
-    div.html("<h2>" + data.word + outcome + "</h2>");
+    div.html("<h3>" + data.word + outcome + "</h3>");
     $("#saved-games").append(div);
   }
 },

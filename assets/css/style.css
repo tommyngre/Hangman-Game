@@ -36,7 +36,6 @@ p.hidden, .hidden{
   bottom:40px;
 }
 
-
 .game{
   background-color: blanchedalmond;
   margin:20px auto 20px auto;
@@ -45,8 +44,10 @@ p.hidden, .hidden{
 
 .game-data{
   background-color: seashell;
-  margin:0;
-  padding-left:40px;
+  margin-top:.5rem;
+  padding:0px 40px;
+  border-bottom:3px solid black;
+  text-align: left;
 }
 
 #char-placeholders{
