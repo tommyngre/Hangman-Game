@@ -22,22 +22,22 @@ var dictionary = {
   //words and bios should be same length
   //indices should correspond
   bios: [
-    "Bimp's treatment of the Flapjacks was questionable, but after suffering at the hands of the togers, and then suffering mightily for Toger herself, might have redeemed him.",
-    "Bramp never thought he'd marry a girl like Toger, so maybe it's no wonder the engagement didn't last. He regretted what he did in the kitchen with Lort, but it was too late.",
-    "Priest was always there for anyone. He took care of the church and mended things between Bruise and Chief. But he also summoned the Nosewolf with the church-bell tune.",
-    "Toger was an indigenous toger who Bramp brought back from Iowa, and who met an unfortunate fate at the hands of the Nosewolf in its moment of ecstasy.",
-    "What Nosewolf did to Toger was wrong, but remember he was under the curse of longing, transformed by Mary's denial of his advances.",
-    "Lort was secretly filmed by Big Den while she nursed a baby which wasn't hers. We all have our secrets.",
-    "Bruise vowed to bridge the gap between the Black and Blue Lives Matter movements. His radical means were controversial, but he meant well.",
-    "Whitey's real name was Whitney, but that ironic nickname, a product of an honest mistake made by Bruise, made sense enough.",
-    "Card spoke against Priest, to none other than Pope, because he was jealous of Priest's sight of Toger.",
-    "Mary denied the first couple conceived by Jones, the result of which was the Nosewolf. Mary was scarcely seen since then.",
-    "Glen's dementia worsened while he and Den co-wrote Bimpernent, a story based on Bimp and Ern. He could remember who wrote what, or who was who.",
-    "Den consented to Jane's request that he film Lort while she nursed Jane's baby, and paid the price for it.",
-    "Ernie survived the togers, but he wasn't the same afterward, or at least not until his reunion with Bimp, which didn't last very long at all.",
-    "Lorraine was accidentally killed by Den, or so he and Glen thought, and Glen was actually glad about it until the day she came back.",
-    "Chief had been on the job for a long time, and developed some unfair biases, which makes it all the more impressive that Bruise could sway him any which way.",
-    "Bap happened to be at Priest's church when he had a vision, which spurred various actors into heroic action. He also accidentally stabbed his houseguest Whitey."
+    "Bimp's treatment of the Flapjacks was questionable, but might he have been redeemed? First he suffered at the hands of the togers, and then he suffered mightily for Toger herself. Who's to say?",
+    "Bramp never thought he'd marry a girl like Toger, so maybe it's no wonder the engagement didn't last. What he did in the kitchen with Lort was wrong, but how could he have known what would happen?",
+    "Priest didn't just take care of the church; he seemed to always be there for everyone. He mended things between Bruise and Chief. But he also summoned the Nosewolf with the church-bell tune in E Minor.",
+    "Toger was an indigenous toger who was brought back from Iowa by Bramp, and who met an unfortunate fate at the hands of the Nosewolf in a joint moment of ecstasy.",
+    "What Nosewolf did to Toger was wrong, but remember: he was under the curse of longing, transformed by Mary's denial of his original advances.",
+    "Lort nursed a baby which wasn't hers, but that doesn't mean she deserved to be secretly filmed while nursing, even if it was ultimately arranged by the baby's real mother.",
+    "Bruise vowed to bridge the gap between the Blue and Black Lives Matter movements. His means were radical and controversial, but there is no doubt about this: he meant well.",
+    "Whitey's real name was Whitney, but that ironic nickname, a product of an honest mistake made by Bruise, made enough sense that it stuck.",
+    "Card spoke against Priest, to none other than Pope, ultimately because he was jealous of Priest because of what he did with Toger. Who could blame him?",
+    "Mary denied the first couple conceived by Jones, the result of which was the Nosewolf. Ultimately, who could say anything except her whereabouts are unknown. Acounts vary.",
+    "Glen's dementia worsened while he and Big Den co-wrote Bimpernent, a story based on Bimp and Ern. He couldn't remember who wrote what, or even who was who. Now wonder he couldn't remember if he killed Lorraine.",
+    "Big Den consented to Jane's request that he film Lort while she nursed Jane's baby, and lived to regret how he had abused the opportunity.",
+    "Ernie survived the togers, albeit barely, but he wasn't the same afterward. He didn't start to come around until his reunion with Bimp, who was also rescued from the togers. We know why Bimp was down there, but what about Ern?",
+    "Lorraine was accidentally killed by Big Den, or so he and Glen thought, and Glen was actually glad about it, until the day she came back.",
+    "Chief had done wrong. That he know. He'd been on the job for a long time, and developed some contemptible biases, but doesn't that make it all the more admirable that he embraced Bruise's cause?",
+    "Bap happened to be at Priest's church when he had a vision, which spurred various actors into heroic action. But what was a Southern Bap doing thereabouts?."
     ,
   ],
   moves: 10,
@@ -94,170 +94,180 @@ var game = {
           $("#canvas").removeClass("moves-flash");
         }, 1000);
       }
-        if (this.moves == 0) {
+      if (this.moves == 0) {
+        this.gameover();
+      }
+    }
+    this.render();
+  },
+  writeLetters: function () {
+    //loop through new divs, populate guessed chars
+    for (i = 0; i < this.word.length; i++) {
+      if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
+        $("#charDiv" + i).text(this.key);
+        this.goodguesses.push(this.key);
+        //console.log("goodguesses length:" + this.goodguesses.length);
+        //console.log(this.goodguesses);
+        //console.log("word length:" + this.word.length);
+        //console.log(this.word);
+        if ((this.goodguesses.length - 1) == this.word.length) {
           this.gameover();
         }
       }
-      this.render();
-    },
-    writeLetters: function () {
-      //loop through new divs, populate guessed chars
-      for (i = 0; i < this.word.length; i++) {
-        if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
-          $("#charDiv" + i).text(this.key);
-          this.goodguesses.push(this.key);
-          //console.log("goodguesses length:" + this.goodguesses.length);
-          //console.log(this.goodguesses);
-          //console.log("word length:" + this.word.length);
-          //console.log(this.word);
-          if ((this.goodguesses.length - 1) == this.word.length) {
-            this.gameover();
-          }
-        }
-      }
-    },
-    drawMove: function () {
-      var c = document.getElementById("canvas");
-      var context = c.getContext("2d");
-      context.lineWidth = 4;
-      if (this.moves == 10) {
-        //nothin 
-      };
-      if (this.moves == 9) {
-        context.moveTo(90, 190);
-        context.lineTo(80, 175);
-        context.stroke();
-      } else if (this.moves == 8) {
-        context.moveTo(80, 175);
-        context.lineTo(75, 100);
-        context.stroke();
-      } else if (this.moves == 7) {
-        context.moveTo(75, 100);
-        context.lineTo(70, 175);
-        context.stroke();
-      } else if (this.moves == 6) {
-        context.moveTo(70, 175);
-        context.lineTo(60, 190);
-        context.stroke();
-      } else if (this.moves == 5) {
-        context.moveTo(75, 100);
-        context.lineTo(75, 50);
-        context.stroke();
-      } else if (this.moves == 4) {
-        context.moveTo(75, 60);
-        context.lineTo(60, 140);
-        context.stroke();
-      } else if (this.moves == 3) {
-        context.moveTo(75, 60);
-        context.lineTo(90, 140);
-        context.stroke();
-      } else if (this.moves == 2) {
-        context.moveTo(60, 140);
-        context.lineTo(57, 150);
-        context.stroke();
-        context.moveTo(60, 140);
-        context.lineTo(60, 150);
-        context.stroke();
-        context.moveTo(60, 140);
-        context.lineTo(63, 150);
-        context.stroke();
-      } else if (this.moves == 1) {
-        context.moveTo(90, 140);
-        context.lineTo(87, 150);
-        context.stroke();
-        context.moveTo(90, 140);
-        context.lineTo(90, 150);
-        context.stroke();
-        context.moveTo(90, 140);
-        context.lineTo(93, 150);
-        context.stroke();
-      } else if (this.moves == 0) {
-        context.beginPath();
-        context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
-        context.stroke();
-        //twice to thicken line
-        context.beginPath();
-        context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
-        context.stroke();
-        //noose
-        context.moveTo(75, 0);
-        context.lineTo(75, 38);
-        context.stroke();
-        context.beginPath();
-        context.ellipse(75, 55, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
-        context.stroke();
-        context.beginPath();
-        context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
-        context.stroke();
-        //red background on gameover
-        $("#canvas").css("background-color", "red");
-      } else {
-        //nothing 
-      };
-    },
-    isKeyAlpha: function (key) {
-      if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
-        return true;
-      } else { return false; }
-    },
-    //prep new game
-    clearStuff: function () {
-      this.moves = dictionary.moves;
-      this.badguesses = [''];
-      this.goodguesses = [''];
-      //clear canvas
-      var c = document.getElementById("canvas");
-      var context = c.getContext("2d");
-      context.clearRect(0, 0, c.width, c.height);
-      $("#canvas").css("background-color", "seashell");
-    },
-    drawLetters: function () {
-      var html = "<div class=\"\">";
-      for (i = 0; i < this.word.length; i++) {
-        html = html + "<div id=\"charDiv" + i + "\" class=\"charDiv\"></div>";
-      }
-      html = html + "</div>";
-      charPlaceholders.innerHTML = html;
-    },
-    gameover: function () {
-      this.saveGame();
-      wordModal.textContent = this.word;
-      bioModal.textContent = dictionary.bios[this.rnd];
-      if (this.moves == 0) {
-        outcome.textContent = " got hung!";
-      } else {
-        outcome.textContent = "lives another day!";
-      }
-      $("#gameover-modal").css("display", "block");
-      var scope = this;
-      window.onclick = function (event) {
-        if (event.target == moreBtn) {
-          modal.style.display = "none";
-          scope.startGame();
-        }
-        else if (event.target == doneBtn) {
-          modal.style.display = "none";
-          scope.loadStoredGames();
-        }
-        else if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      }
-    },
-    saveGame: function () {
-      //console.log(JSON.stringify(this));
-      var n = "game" + (gameIndex);
-      localStorage.setItem(n, JSON.stringify(this));
-      $("#saved-games").html("");
-    },
-    guessesToString: function () {
-      var str = "";
-      for (i = 0; i < this.badguesses.length; i++) {
-        str = str + " " + this.badguesses[i];
-      }
-      return str;
     }
-  ,
+  },
+  drawMove: function () {
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.lineWidth = 4;
+    if (this.moves == 10) {
+      context.font = "200px 'Nanum Gothic Coding',monospace ";
+      context.fillText("?",30,160);
+    };
+    if (this.moves < 10) {
+      context.clearRect(0, 0, c.width, c.height);
+      context.moveTo(90, 190);
+      context.lineTo(80, 175);
+      context.stroke();
+    } 
+    if (this.moves < 9) {
+      context.moveTo(80, 175);
+      context.lineTo(75, 100);
+      context.stroke();
+    } 
+    if (this.moves < 8) {
+      context.moveTo(75, 100);
+      context.lineTo(70, 175);
+      context.stroke();
+    } 
+    if (this.moves < 7) {
+      context.moveTo(70, 175);
+      context.lineTo(60, 190);
+      context.stroke();
+    } 
+    if (this.moves < 6) {
+      context.moveTo(75, 100);
+      context.lineTo(75, 50);
+      context.stroke();
+    } 
+    if (this.moves < 5) {
+      context.moveTo(75, 60);
+      context.lineTo(60, 140);
+      context.stroke();
+    } 
+    if (this.moves < 4) {
+      context.moveTo(75, 60);
+      context.lineTo(90, 140);
+      context.stroke();
+    } 
+    if (this.moves < 3) {
+      context.moveTo(60, 140);
+      context.lineTo(57, 150);
+      context.stroke();
+      context.moveTo(60, 140);
+      context.lineTo(60, 150);
+      context.stroke();
+      context.moveTo(60, 140);
+      context.lineTo(63, 150);
+      context.stroke();
+    } 
+    if (this.moves < 2) {
+      context.moveTo(90, 140);
+      context.lineTo(87, 150);
+      context.stroke();
+      context.moveTo(90, 140);
+      context.lineTo(90, 150);
+      context.stroke();
+      context.moveTo(90, 140);
+      context.lineTo(93, 150);
+      context.stroke();
+    } 
+    if (this.moves == 0) {
+      context.beginPath();
+      context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      //twice to thicken line
+      context.beginPath();
+      context.ellipse(90, 38, 20, 10, 155 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      //noose
+      context.moveTo(75, 0);
+      context.lineTo(75, 38);
+      context.stroke();
+      context.beginPath();
+      context.ellipse(75, 55, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      context.beginPath();
+      context.ellipse(75, 58, 1, 3, 90 * Math.PI / 180, 0, 2 * Math.PI);
+      context.stroke();
+      //red background on gameover
+      $("#canvas").css("background-color", "red");
+    } else {
+      //nothing 
+    };
+  },
+  isKeyAlpha: function (key) {
+    if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
+      return true;
+    } else { return false; }
+  },
+  //prep new game
+  clearStuff: function () {
+    this.moves = dictionary.moves;
+    this.badguesses = [''];
+    this.goodguesses = [''];
+    //clear canvas
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.clearRect(0, 0, c.width, c.height);
+    $("#canvas").css("background-color", "seashell");
+  },
+  drawLetters: function () {
+    var html = "<div class=\"\">";
+    for (i = 0; i < this.word.length; i++) {
+      html = html + "<div id=\"charDiv" + i + "\" class=\"charDiv\"></div>";
+    }
+    html = html + "</div>";
+    charPlaceholders.innerHTML = html;
+  },
+  gameover: function () {
+    this.saveGame();
+    wordModal.textContent = this.word;
+    bioModal.textContent = dictionary.bios[this.rnd];
+    if (this.moves == 0) {
+      outcome.textContent = " got hung!";
+    } else {
+      outcome.textContent = "lives another day!";
+    }
+    $("#gameover-modal").css("display", "block");
+    var scope = this;
+    window.onclick = function (event) {
+      if (event.target == moreBtn) {
+        modal.style.display = "none";
+        scope.startGame();
+      }
+      else if (event.target == doneBtn) {
+        modal.style.display = "none";
+        scope.loadStoredGames();
+      }
+      else if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  },
+  saveGame: function () {
+    //console.log(JSON.stringify(this));
+    var n = "game" + (gameIndex);
+    localStorage.setItem(n, JSON.stringify(this));
+    $("#saved-games").html("");
+  },
+  guessesToString: function () {
+    var str = "";
+    for (i = 0; i < this.badguesses.length; i++) {
+      str = str + " " + this.badguesses[i];
+    }
+    return str;
+  },
   render: function () {
     movesLeft.textContent = this.moves;
     keysPressed.textContent = this.guessesToString();
@@ -266,6 +276,7 @@ var game = {
     //gameover handling
   },
   loadStoredGames: function () {
+    $("#saved-games").text("Previous games:");
     for (i = 0; i < localStorage.length; i++) {
       var n = "game" + (i + 1); // because gameIndex starts at 1
       var data = JSON.parse(localStorage.getItem(n));
