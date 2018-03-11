@@ -45,31 +45,37 @@ var dictionary = {
 
 var game = {
   word: '',
+  goodguesses: [''],
   bio: '',
   key: '',
   rnd: '',
-  wordChars: [],
-  buildWordChars: function () {
-    for (i = 0; i < this.word.length; i++) {
-      this.wordChars.push(this.word.charAt(i));
-    }
-  },
+  wonGame: '',
+
   chooseWord: function () {
     this.rnd = Math.floor(Math.random() * Math.floor(dictionary.words.length));
     this.word = dictionary.words[this.rnd];
     this.bio = dictionary.bios[this.rnd];
-    this.buildWordChars();
     this.render();
   },
-  moves: 10,
+  moves: dictionary.moves,
   guesses: [],
   evaluateMove: function (key) {
+    //if 0 moves, stop
     if (this.moves == 0) {
       return;
     }
+    //if not alpha, stop
     if (!(this.isKeyAlpha(key) == true)) {
       return;
     };
+    //if in var word, render and stop
+    for (i=0; i<this.word.length; i++){
+      if (key.toLowerCase() == this.word.charAt(i).toLowerCase()){
+        this.render();
+        return;
+      }
+    }
+
     var isNew = true;
     for (i = 0; i < this.guesses.length; i++) {
       if (key == this.guesses[i]) {
@@ -81,8 +87,10 @@ var game = {
       this.guesses.push(key);
       this.moves--;
       if (this.moves == 0) {
-        this.showModal();
+        this.wonGame = false;
+        this.gameover();
       }
+
       //add animation class, then remove after delay
       $("#moves-left").addClass("moves-flash");
       setTimeout(function () {
@@ -95,9 +103,14 @@ var game = {
   },
   writeLetters: function () {
     //loop through new divs, populate guessed chars
+    console.log("here " + this.key);
     for (i = 0; i < this.word.length; i++) {
       if (this.key.toLowerCase() == this.word.charAt(i).toLowerCase()) {
         $("#charDiv" + i).text(this.key);
+        this.goodguesses.push(this.key);
+        if ((this.goodguesses.length-1) == this.word.length){
+          this.gameover();
+        }
       }
     }
   },
@@ -177,7 +190,18 @@ var game = {
     } else {
       //nothing 
     };
-    //$("#canvas").addClass("moves-flash");
+
+    //make canvas flash red after any move
+    //and remain red at gameover
+    $("#canvas").addClass("moves-flash");
+    if (!(this.moves == 0)) {
+      setTimeout(function () {
+        $("#canvas").removeClass("moves-flash");
+      }, 1000);
+    } else {
+      $("#canvas").css("background-color", "red");
+    }
+
   },
   isKeyAlpha: function (key) {
     if ((key.length === 1) && (key.match(/[a-z]|[A-Z]/))) {
@@ -186,27 +210,12 @@ var game = {
   },
   clearStuff: function () {
     this.moves = dictionary.moves;
-    this.wordChars = [''];
     this.guesses = [''];
-    //somehow clear canvas
-  },
-  startGame: function () {
-    gameIndex++;
-    this.clearStuff();
-    this.chooseWord();
-    console.log(this.word);
-    this.drawLetters();
-    setTimeout(function () {
-      $("#banner").addClass("lift-banner");
-    }, 1000);
-    setTimeout(function () {
-      $("#banner").addClass("hidden");
-    }, 2000);
-    var scope = this;
-    document.onkeyup = function (e) {
-      scope.key = e.key;
-      game.evaluateMove(scope.key);
-    }
+    //clear canvas
+    var c = document.getElementById("canvas");
+    var context = c.getContext("2d");
+    context.clearRect(0, 0, c.width, c.height);
+    $("#canvas").css("background-color", "seashell");
   },
   drawLetters: function () {
     var html = "<div class=\"\">";
@@ -216,20 +225,25 @@ var game = {
     html = html + "</div>";
     charPlaceholders.innerHTML = html;
   },
-  showModal: function () {
+  gameover: function () {
+    this.saveToLocalStorage();
     wordModal.textContent = this.word;
     bioModal.textContent = dictionary.bios[this.rnd];
-    outcome.textContent = " got hung!";
+    if (this.moves == 0) {
+      outcome.textContent = " got hung!";
+    } else {
+      outcome.textContent = "lives another day!";
+    }
     $("#gameover-modal").css("display", "block");
     var scope = this;
     window.onclick = function (event) {
       if (event.target == moreBtn) {
         modal.style.display = "none";
-        scope.saveToLocalStorage();
         scope.startGame();
       }
       else if (event.target == doneBtn) {
         modal.style.display = "none";
+        scope.loadFromLocalStorage();
       }
       else if (event.target == modal) {
         modal.style.display = "none";
@@ -241,15 +255,8 @@ var game = {
     var n = "game"+(gameIndex);
     console.log(n);
     localStorage.setItem(n, JSON.stringify(this));
-      var data = JSON.parse(localStorage.getItem(n));
-      //console.log(data);
-      //console.log(data.word + " was hung after you guessed" + data.guesses);
-      var div = $("<div>");
-      div.attr(n);
-      div.addClass("row game-data");
-      div.html("<h2>" + data.word + " was hung after you guessed" + data.guesses + "</h2>");
-      $("#saved-games").append(div);
-    },
+    $("#saved-games").html("");
+  },
   guessesToString: function () {
     var str = "";
     for (i = 0; i < this.guesses.length; i++) {
@@ -264,12 +271,44 @@ var game = {
     this.writeLetters();
     this.drawMove();
     //gameover handling
-    if (!(this.moves == 0)) {
-      setTimeout(function () {
-        $("#canvas").removeClass("moves-flash");
-      }, 1000);
-    } else {
-      $("#canvas").css("background-color", "red");
+  },
+  loadFromLocalStorage: function(){
+  for (i = 0; i < localStorage.length; i++) {
+    var n = "game"+(i+1); // because gameIndex starts at 1
+    console.log(n);
+    var data = JSON.parse(localStorage.getItem(n));
+    //console.log(data);
+    //console.log(data.word + " was hung after you guessed" + data.guesses);
+    var div = $("<div>");
+    div.attr(n);
+    div.addClass("row game-data");
+    var outcome = '';    
+    if ((data.moves == 0)){
+      outcome = " got hung!";
+    } else { 
+      outcome = " survived, with " + data.moves + " guesses to spare!";
+    }
+    div.html("<h2>" + data.word + outcome + "</h2>");
+    $("#saved-games").append(div);
+  }
+},
+  startGame: function () {
+    gameIndex++;
+    this.clearStuff();
+    this.loadFromLocalStorage();
+    this.chooseWord();
+    console.log(this.word);
+    this.drawLetters();
+    setTimeout(function () {
+      $("#banner").addClass("lift-banner");
+    }, 1000);
+    setTimeout(function () {
+      $("#banner").addClass("hidden");
+    }, 2000);
+    var scope = this;
+    document.onkeyup = function (e) {
+      scope.key = e.key;
+      game.evaluateMove(scope.key);
     }
   }
 }
@@ -288,4 +327,6 @@ var wordModal = document.getElementById("word");
 var bioModal = document.getElementById("bio");
 var outcome = document.getElementById("outcome");
 
+$(document).ready( function (){
 game.startGame();
+});
