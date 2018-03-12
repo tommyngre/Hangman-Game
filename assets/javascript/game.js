@@ -260,6 +260,7 @@ var game = {
       else if (event.target == doneBtn) {
         modal.style.display = "none";
         scope.loadStoredGames();
+        window.location.href = "#previous-games";
       }
       else if (event.target == modal) {
         modal.style.display = "none";
@@ -288,7 +289,7 @@ var game = {
   },
   loadStoredGames: function () {
     $("#saved-games").text("Previous games:");
-    for (i = localStorage.length-1; i > -1 ; i--) {
+    for (i = 0; i < localStorage.length; i++) {
       var n = "game" + (i + 1); // because gameIndex starts at 1
       var data = JSON.parse(localStorage.getItem(n));
       //console.log(data.word);
