@@ -1,3 +1,5 @@
+//global variables, then objs, then calls
+
 var gameIndex = 0;
 
 var dictionary = {
@@ -43,6 +45,18 @@ var dictionary = {
   moves: 10,
 }
 
+//TODO: optionally refactor some of these away and use jquery
+var movesLeft = document.getElementById("moves-left");
+movesLeft.textContent = dictionary.moves;
+var charPlaceholders = document.getElementById("char-placeholders");
+var keysPressed = document.getElementById("keys-pressed");
+var modal = document.getElementById("gameover-modal");
+var doneBtn = document.getElementById("done-button");
+var moreBtn = document.getElementById("more-button");
+var wordModal = document.getElementById("word");
+var bioModal = document.getElementById("bio");
+var outcome = document.getElementById("outcome");
+
 var game = {
   word: '',
   goodguesses: [''],
@@ -55,6 +69,7 @@ var game = {
     this.bio = dictionary.bios[this.rnd];
     this.render();
   },
+  //theoretically, dictionary val could be modified
   moves: dictionary.moves,
   badguesses: [],
   evaluateMove: function (key) {
@@ -273,7 +288,7 @@ var game = {
   },
   loadStoredGames: function () {
     $("#saved-games").text("Previous games:");
-    for (i = 0; i < localStorage.length; i++) {
+    for (i = localStorage.length-1; i > -1 ; i--) {
       var n = "game" + (i + 1); // because gameIndex starts at 1
       var data = JSON.parse(localStorage.getItem(n));
       //console.log(data.word);
@@ -310,19 +325,6 @@ var game = {
     }
   }
 }
-
-//assignments
-//optionally refactor some of these away and use jquery
-var movesLeft = document.getElementById("moves-left");
-movesLeft.textContent = dictionary.moves;
-var charPlaceholders = document.getElementById("char-placeholders");
-var keysPressed = document.getElementById("keys-pressed");
-var modal = document.getElementById("gameover-modal");
-var doneBtn = document.getElementById("done-button");
-var moreBtn = document.getElementById("more-button");
-var wordModal = document.getElementById("word");
-var bioModal = document.getElementById("bio");
-var outcome = document.getElementById("outcome");
 
 $(document).ready(function () {
   game.startGame();
