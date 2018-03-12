@@ -288,6 +288,14 @@ var game = {
     //gameover handling
   },
   loadStoredGames: function () {
+
+    if (localStorage.length == 0){
+      return;
+    }
+    else {
+      $("#no-saved-games").css("display","none");
+    }
+
     $("#saved-games").text("Previous games:");
     for (i = 0; i < localStorage.length; i++) {
       var n = "game" + (i + 1); // because gameIndex starts at 1
